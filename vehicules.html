@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicles - TKflow</title>
+  <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">TKflow Location</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="vehicules.html" class="active">Vehicules</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main class="page-content">
+  <section class="page-hero">
+    <h1>Our Fleet</h1>
+    <p>Choose your vehicle and book instantly</p>
+  </section>
+
+  <section class="filter-bar">
+    <div class="filter-search">
+      <input id="vehicleSearch" type="search" placeholder="Rechercher un modèle, une catégorie ou une caractéristique">
+    </div>
+    <div id="categoryFilters" class="filter-buttons"></div>
+  </section>
+
+  <section id="vehiclesGrid" class="vehicles-grid"></section>
+</main>
+
+  <div id="modalBackdrop" class="modal-backdrop hidden"></div>
+  <div id="authModal" class="auth-modal hidden"></div>
+
+  <script src="./assets/js/script.js"></script>
+</body>
+</html>

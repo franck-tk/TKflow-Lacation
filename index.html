@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TKflow Car Rental</title>
+  <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="brand">TKflow Location</div>
+
+  <nav class="main-nav">
+    <a href="./index.html">Home</a>
+    <a href="./about.html">About</a>
+    <a href="./vehicules.html">Vehicules</a>
+    <a href="./reservations.html">Reservations</a>
+    <a href="./dashboard.html">Dashboard</a>
+    <a href="./contact.html">Contact</a>
+  </nav>
+
+  <div class="header-actions">
+    <a href="./admin-vehicles.html" id="adminButton" class="btn primary hidden">
+      Admin Panel
+    </a>
+
+    <div class="auth-actions"></div>
+  </div>
+</header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Premium Car Rental</p>
+        <h1>Drive the best cars with TKflow</h1>
+        <p>Secure, fast, and modern vehicle reservations with Orange Money and MTN Mobile Money payment support.</p>
+        <div class="hero-actions">
+          <a href="./vehicules.html" class="btn primary">Browse Vehicles</a>
+          <a href="./reservations.html" class="btn secondary">My Reservations</a>
+        </div>
+      </div>
+      <div class="hero-image">
+  <img src="./assets/images/Toyota Corolla Executive.webp" alt="TKflow Hero Car" class="hero-car-image">
+</div>
+    </section>
+
+    <section class="features-section">
+      <div class="feature-card">
+        <h2>Secure Booking</h2>
+        <p>Authenticate by phone, email, or Google to securely reserve vehicles.</p>
+      </div>
+      <div class="feature-card">
+        <h2>Verified Drivers</h2>
+        <p>Clients upload ID front/back and a clear portrait for safe rentals.</p>
+      </div>
+      <div class="feature-card">
+        <h2>24/7 Tracking</h2>
+        <p>Each car includes GPS tracking as an extra safety measure.</p>
+      </div>
+    </section>
+
+    <section class="highlight-section">
+      <div>
+        <h2>Fast reservation with transparent pricing</h2>
+        <p>See daily rates, reservation totals and confirm instantly via phone or email.</p>
+      </div>
+      <div class="highlight-grid">
+        <div class="small-card">
+          <strong>Simple reservation</strong>
+          <p>Choose a vehicle, select start/end dates, and pay with Orange or MTN Money.</p>
+        </div>
+        <div class="small-card">
+          <strong>Vehicle Status</strong>
+          <p>Unavailable cars show a notice immediately before booking.</p>
+        </div>
+        <div class="small-card">
+          <strong>Identity verification</strong>
+          <p>CNI and portrait uploads protect both drivers and rental fleet.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>TKflow Location © 2026 • Secure car rental with GPS safety and flexible payments.</p>
+  </footer>
+
+  <div id="modalBackdrop" class="modal-backdrop hidden"></div>
+  <div id="authModal" class="auth-modal hidden"></div>
+
+  <script src="./assets/js/script.js"></script>
+</body>
+</html>

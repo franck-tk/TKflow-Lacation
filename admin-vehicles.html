@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel - TKflow</title>
+  <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">TKflow Admin</div>
+    <div class="auth-actions"></div>
+  </header>
+
+  <main class="page-content">
+    <section class="page-hero">
+      <h1>Admin Control</h1>
+      <p>En tant que superadmin, vous pouvez promouvoir un client en admin ou supprimer un compte client.</p>
+    </section>
+
+    <section>
+      <h2>Gestion des clients</h2>
+      <div id="adminUsersList"></div>
+    </section>
+
+    <section>
+      <h2>Gestion des véhicules</h2>
+      <p>Vous pouvez ajouter ou modifier des véhicules depuis le dashboard principal.</p>
+      <a href="./dashboard.html" class="btn primary">Aller au dashboard</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>TKflow Admin © 2026</p>
+  </footer>
+
+  <script src="./assets/js/script.js"></script>
+  <script>
+    window.addEventListener('load', async () => {
+      loadCurrentUser();
+      renderAuthButtons();
+      const adminUsersContainer = document.getElementById('adminUsersList');
+      if (adminUsersContainer) {
+        await renderAdminUsers(adminUsersContainer);
+      }
+    });
+  </script>
+</body>
+</html>

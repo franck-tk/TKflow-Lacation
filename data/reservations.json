@@ -1,0 +1,16 @@
+[
+  {
+    "id": "f2c4d7c2-e031-4ccc-9ac3-9f511db15496",
+    "userId": "admin-001",
+    "vehicleId": "car-1",
+    "vehicleName": "Toyota Corolla Standard",
+    "startDate": "2026-05-20T00:00:00.000Z",
+    "endDate": "2026-05-22T00:00:00.000Z",
+    "duration": 2,
+    "unitPrice": 55,
+    "total": 110,
+    "paymentMethod": "Orange Money",
+    "status": "confirmed",
+    "createdAt": "2026-05-18T21:53:09.222Z"
+  }
+]

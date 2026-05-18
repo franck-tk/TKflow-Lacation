@@ -1,0 +1,16 @@
+[
+  {
+    "id": "admin-001",
+    "username": "Todjoum Kemegne Franck Junior",
+    "phone": "+237677659294",
+    "email": "todjoumfranck@gmail.com",
+    "password": "2805Ca66",
+    "googleAuth": false,
+    "appleAuth": false,
+    "role": "superadmin",
+    "cniFront": "",
+    "cniBack": "",
+    "portrait": "",
+    "createdAt": "2026-05-18T12:00:00Z"
+  }
+]
