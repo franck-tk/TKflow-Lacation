@@ -279,7 +279,7 @@ app.get('/api/reservations/:userId', (req, res) => {
   res.json(userReservations);
 });
 
-app.post('/api/reservations', (req, res) => {
+app.post('/api/reservations', async (req, res) => {
   const { userId, vehicleId, startDate, endDate, paymentMethod } = req.body;
   const reservations = readData(RESERVATIONS_FILE);
   const vehicles = readData(VEHICLES_FILE);
