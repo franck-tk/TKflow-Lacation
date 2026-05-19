@@ -216,11 +216,11 @@ app.post('/api/register', upload.fields([
   const users = readData(USERS_FILE);
 
   if (!name || !email || !password) {
-    return res.status(400).json({ error: 'Nom, email et mot de passe requis.' });
+    return res.status(400).json({ error: 'Username, email and password are required.' });
   }
 
   if (users.some(user => user.email === email || (phone && user.phone === phone))) {
-    return res.status(400).json({ error: 'Email déjà utilisé.' });
+    return res.status(400).json({ error: 'Email already used.' });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -251,10 +251,36 @@ app.post('/api/login', async (req, res) => {
   const user = users.find(u => u.email === login || u.phone === login);
 
   if (!user || !(await bcrypt.compare(password, user.password))) {
-    return res.status(401).json({ error: 'Mot de passe incorrect.' });
+    return res.status(401).json({ error: 'Incorrect password.' });
   }
 
   res.json({ user: sanitizeUser(user), message: 'Login successful' });
+});
+
+app.post('/api/profile/complete', upload.fields([
+  { name: 'cniFront', maxCount: 1 },
+  { name: 'cniBack', maxCount: 1 },
+  { name: 'portrait', maxCount: 1 }
+]), async (req, res) => {
+  const { userId, cniNumber } = req.body;
+  if (!userId || !cniNumber) {
+    return res.status(400).json({ error: 'User ID and CNI number are required.' });
+  }
+  const users = readData(USERS_FILE);
+  const userIndex = users.findIndex(u => u.id === userId);
+  if (userIndex === -1) {
+    return res.status(404).json({ error: 'User not found.' });
+  }
+  users[userIndex] = {
+    ...users[userIndex],
+    cniNumber,
+    profileComplete: true,
+    cniFront: req.files?.cniFront?.[0]?.filename || users[userIndex].cniFront || '',
+    cniBack: req.files?.cniBack?.[0]?.filename || users[userIndex].cniBack || '',
+    portrait: req.files?.portrait?.[0]?.filename || users[userIndex].portrait || ''
+  };
+  writeData(USERS_FILE, users);
+  res.json({ user: sanitizeUser(users[userIndex]) });
 });
 
 app.post('/api/auth/:provider', (req, res) => {

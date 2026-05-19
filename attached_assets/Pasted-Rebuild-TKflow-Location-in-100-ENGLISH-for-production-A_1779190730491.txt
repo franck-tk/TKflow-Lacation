@@ -1,0 +1,37 @@
+Rebuild TKflow Location in 100% ENGLISH for production:
+
+AUTHENTICATION - SEPARATE PAGES:
+1. Create /login page (NOT modal): fields Email + Password, button "Login", link "Don't have an account? Sign Up"
+2. Create /signup page (NOT modal): fields ONLY Username, Email, Phone, Password, Confirm Password, checkbox "I agree to Terms and Conditions", button "Create Account", link "Already have an account? Login"
+3. Hash passwords with bcrypt, auto-login after signup, redirect to homepage with "Hello, [Username]"
+4. Remove ALL Google buttons, remove CNI fields from signup
+5. English messages only: "Email already used", "Incorrect password", "Passwords do not match", "Account created successfully"
+
+PROFILE COMPLETION LATER:
+6. When logged-in user clicks "Reserve" on any vehicle, check if profile is complete (CNI + ID photo). If not, redirect to /complete-profile with message "Please complete your profile to make a reservation" and ask for CNI number, CNI front photo, CNI back photo, portrait photo. Save then continue to reservation.
+
+NAVBAR:
+7. Make "TKFLOW LOCATION" logo clickable to /
+8. Desktop: horizontal. Mobile (<768px): hamburger ≡ opens vertical dropdown
+9. If NOT logged in: show Home, About, Vehicles, Contact, Login, Sign Up — HIDE Reservations, Dashboard, Admin Panel
+10. If LOGGED IN: show Home, Vehicles, My Reservations, Dashboard, Contact, Hello [Username], Logout — HIDE Login, Sign Up, About. If superadmin, also show Admin Panel
+
+100% ENGLISH TRANSLATION:
+- All text in English only
+- "Conduisez..." → "Drive the best cars with TKflow"
+- "Voir les véhicules" → "Browse Vehicles"
+- "Mes Réservations" → "My Reservations"
+- "Tableau de bord" → "Dashboard"
+- "Déconnexion" → "Logout"
+
+HOMEPAGE PROFESSIONAL:
+11. Rebuild homepage sections:
+- Hero: "Drive the best cars with TKflow", subtitle "Secure, fast reservations with Orange Money and MTN Mobile Money", buttons "Browse Vehicles" and "How it works"
+- About: "About TKflow" - premium car rental in Douala since 2024
+- How it works: 3 steps - Choose, Book & Pay, Drive
+- Featured Fleet: grid of 6 vehicles from database with photo, name, price/day, Reserve button
+- Why choose us: 4 features - Mobile Money, Verified ID, 24/7 GPS, WhatsApp Support
+- Testimonials: 3 customer reviews
+- Footer with contact
+
+Design: modern black/orange, clean cards, fully responsive.

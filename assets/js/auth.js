@@ -20,10 +20,10 @@ function renderAuthArea() {
       const firstName = (user.username || user.email || '').split(' ')[0];
       const welcome = document.createElement('span');
       welcome.className = 'user-welcome';
-      welcome.textContent = `Bonjour, ${firstName}`;
+      welcome.textContent = `Hello, ${firstName}`;
       const logout = document.createElement('button');
       logout.className = 'btn secondary';
-      logout.textContent = 'D\u00e9connexion';
+      logout.textContent = 'Logout';
       logout.addEventListener('click', () => {
         localStorage.removeItem('tkflow_current_user');
         window.location.reload();
@@ -34,11 +34,11 @@ function renderAuthArea() {
       const login = document.createElement('a');
       login.className = 'btn secondary';
       login.href = './login.html';
-      login.textContent = 'Connexion';
+      login.textContent = 'Login';
       const register = document.createElement('a');
       register.className = 'btn primary';
       register.href = './signup.html';
-      register.textContent = "S'inscrire";
+      register.textContent = 'Sign Up';
       area.appendChild(login);
       area.appendChild(register);
     }
@@ -52,6 +52,10 @@ async function handleLogin(e) {
   const errorEl = document.getElementById('authError');
   errorEl.textContent = '';
 
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = 'Logging in…';
+
   try {
     const response = await fetch(`${API_BASE}/login`, {
       method: 'POST',
@@ -61,14 +65,18 @@ async function handleLogin(e) {
     const data = await response.json();
 
     if (!response.ok) {
-      errorEl.textContent = data.error || 'Erreur de connexion.';
+      errorEl.textContent = data.error || 'Login error.';
+      btn.disabled = false;
+      btn.textContent = 'Login';
       return;
     }
 
     localStorage.setItem('tkflow_current_user', JSON.stringify(data.user));
     window.location.href = './index.html';
   } catch {
-    errorEl.textContent = 'Erreur de connexion. Veuillez r\u00e9essayer.';
+    errorEl.textContent = 'Connection error. Please try again.';
+    btn.disabled = false;
+    btn.textContent = 'Login';
   }
 }
 
@@ -76,19 +84,31 @@ async function handleSignup(e) {
   e.preventDefault();
   const name = document.getElementById('signupName').value.trim();
   const email = document.getElementById('signupEmail').value.trim();
+  const phone = document.getElementById('signupPhone')?.value.trim() || '';
   const password = document.getElementById('signupPassword').value.trim();
   const confirm = document.getElementById('signupConfirm').value.trim();
+  const terms = document.getElementById('signupTerms');
   const errorEl = document.getElementById('authError');
   errorEl.textContent = '';
 
-  if (password !== confirm) {
-    errorEl.textContent = 'Les mots de passe ne correspondent pas.';
+  if (terms && !terms.checked) {
+    errorEl.textContent = 'Please agree to the Terms and Conditions.';
     return;
   }
+
+  if (password !== confirm) {
+    errorEl.textContent = 'Passwords do not match.';
+    return;
+  }
+
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = 'Creating account…';
 
   const formData = new FormData();
   formData.append('name', name);
   formData.append('email', email);
+  if (phone) formData.append('phone', phone);
   formData.append('password', password);
 
   try {
@@ -99,14 +119,18 @@ async function handleSignup(e) {
     const data = await response.json();
 
     if (!response.ok) {
-      errorEl.textContent = data.error || 'Erreur lors de la cr\u00e9ation du compte.';
+      errorEl.textContent = data.error || 'Error creating account.';
+      btn.disabled = false;
+      btn.textContent = 'Create Account';
       return;
     }
 
     localStorage.setItem('tkflow_current_user', JSON.stringify(data.user));
     window.location.href = './index.html';
   } catch {
-    errorEl.textContent = 'Erreur. Veuillez r\u00e9essayer.';
+    errorEl.textContent = 'Error. Please try again.';
+    btn.disabled = false;
+    btn.textContent = 'Create Account';
   }
 }
 

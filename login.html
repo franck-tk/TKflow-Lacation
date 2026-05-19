@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connexion – TKflow</title>
+  <title>Login – TKflow Location</title>
   <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
 <body>
   <header class="site-header">
-    <div class="brand">TKflow Location</div>
+    <a href="./index.html" class="brand">TKflow Location</a>
     <button class="hamburger" id="hamburgerBtn" aria-label="Menu">&#9776;</button>
     <div class="nav-wrapper" id="navWrapper">
       <nav class="main-nav">
-        <a href="./index.html">Accueil</a>
-        <a href="./about.html">À propos</a>
-        <a href="./vehicules.html">Véhicules</a>
-        <a href="./reservations.html">Réservations</a>
-        <a href="./dashboard.html">Dashboard</a>
+        <a href="./index.html">Home</a>
+        <a href="./about.html">About</a>
+        <a href="./vehicules.html">Vehicles</a>
         <a href="./contact.html">Contact</a>
       </nav>
       <div class="header-actions">
@@ -27,17 +25,17 @@
 
   <main class="auth-page">
     <div class="auth-card">
-      <h1>Se connecter</h1>
-      <p class="auth-subtitle">Accédez à votre compte TKflow</p>
+      <h1>Login</h1>
+      <p class="auth-subtitle">Access your TKflow account</p>
       <form id="loginForm" class="field-group">
-        <label for="loginEmail">Adresse email</label>
-        <input type="email" id="loginEmail" required placeholder="vous@exemple.com" autocomplete="email">
-        <label for="loginPassword">Mot de passe</label>
+        <label for="loginEmail">Email address</label>
+        <input type="email" id="loginEmail" required placeholder="you@example.com" autocomplete="email">
+        <label for="loginPassword">Password</label>
         <input type="password" id="loginPassword" required placeholder="••••••••" autocomplete="current-password">
         <p id="authError" class="auth-error"></p>
-        <button type="submit" class="btn primary auth-submit">Se connecter</button>
+        <button type="submit" class="btn primary auth-submit">Login</button>
       </form>
-      <p class="auth-link">Pas de compte ? <a href="./signup.html">S'inscrire</a></p>
+      <p class="auth-link">Don't have an account? <a href="./signup.html">Sign Up</a></p>
     </div>
   </main>
 

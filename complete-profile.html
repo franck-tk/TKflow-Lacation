@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete Profile – TKflow Location</title>
+  <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="./index.html" class="brand">TKflow Location</a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">&#9776;</button>
+    <div class="nav-wrapper" id="navWrapper">
+      <nav class="main-nav">
+        <a href="./index.html">Home</a>
+        <a href="./about.html" data-nav="guest">About</a>
+        <a href="./vehicules.html">Vehicles</a>
+        <a href="./reservations.html" data-nav="user" class="hidden">My Reservations</a>
+        <a href="./dashboard.html" data-nav="user" class="hidden">Dashboard</a>
+        <a href="./contact.html">Contact</a>
+        <a href="./admin-vehicles.html" data-nav="admin" class="hidden">Admin Panel</a>
+      </nav>
+      <div class="header-actions">
+        <div class="auth-actions"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="auth-page">
+    <div class="auth-card profile-card">
+      <div class="profile-header">
+        <div class="profile-icon">🪪</div>
+        <h1>Complete Your Profile</h1>
+        <p class="auth-subtitle">Please complete your profile to make a reservation. We need to verify your identity.</p>
+      </div>
+      <div class="profile-notice">
+        <span>🔒</span>
+        <span>Your documents are encrypted and stored securely. They are only used for identity verification.</span>
+      </div>
+      <form id="profileForm" class="field-group" enctype="multipart/form-data">
+        <label for="cniNumber">CNI Number (National ID)</label>
+        <input type="text" id="cniNumber" name="cniNumber" required placeholder="e.g. 123456789" autocomplete="off">
+
+        <label for="cniFront">CNI Front Photo</label>
+        <div class="file-upload-wrap">
+          <input type="file" id="cniFront" name="cniFront" accept="image/*" required>
+          <label for="cniFront" class="file-upload-btn">
+            <span class="file-icon">📷</span>
+            <span id="cniFrontLabel">Choose front of ID card</span>
+          </label>
+        </div>
+
+        <label for="cniBack">CNI Back Photo</label>
+        <div class="file-upload-wrap">
+          <input type="file" id="cniBack" name="cniBack" accept="image/*" required>
+          <label for="cniBack" class="file-upload-btn">
+            <span class="file-icon">📷</span>
+            <span id="cniBackLabel">Choose back of ID card</span>
+          </label>
+        </div>
+
+        <label for="portrait">Portrait Photo (selfie)</label>
+        <div class="file-upload-wrap">
+          <input type="file" id="portrait" name="portrait" accept="image/*" required>
+          <label for="portrait" class="file-upload-btn">
+            <span class="file-icon">🤳</span>
+            <span id="portraitLabel">Choose a clear selfie</span>
+          </label>
+        </div>
+
+        <p id="profileError" class="auth-error"></p>
+        <button type="submit" class="btn primary auth-submit">Save & Continue</button>
+      </form>
+    </div>
+  </main>
+
+  <script src="./assets/js/complete-profile.js"></script>
+</body>
+</html>

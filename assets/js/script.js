@@ -415,7 +415,7 @@ function renderAuthButtons() {
     if (current) {
       const firstName = (current.username || current.email || '').split(' ')[0];
       const welcome = document.createElement('span');
-      welcome.textContent = `Bonjour, ${firstName}`;
+      welcome.textContent = `Hello, ${firstName}`;
       welcome.className = 'user-welcome';
       area.appendChild(welcome);
       if (current.role) {
@@ -426,7 +426,7 @@ function renderAuthButtons() {
       }
       const logout = document.createElement('button');
       logout.className = 'btn secondary';
-      logout.textContent = 'Déconnexion';
+      logout.textContent = 'Logout';
       logout.addEventListener('click', () => {
         clearCurrentUser();
         renderAuthButtons();
@@ -437,11 +437,11 @@ function renderAuthButtons() {
     } else {
       const login = document.createElement('a');
       login.className = 'btn secondary';
-      login.textContent = 'Connexion';
+      login.textContent = 'Login';
       login.href = './login.html';
       const register = document.createElement('a');
       register.className = 'btn primary';
-      register.textContent = "S'inscrire";
+      register.textContent = 'Sign Up';
       register.href = './signup.html';
       area.appendChild(login);
       area.appendChild(register);
@@ -483,7 +483,7 @@ async function renderHomeFleet() {
     card.className = 'home-fleet-card';
     const imgHtml = v.image
       ? `<img src="${v.image}" alt="${v.name}" class="fleet-car-img">`
-      : `<div class="fleet-car-placeholder"><span>${v.category || 'Véhicule'}</span></div>`;
+      : `<div class="fleet-car-placeholder"><span>${v.category || 'Vehicle'}</span></div>`;
     card.innerHTML = `
       ${imgHtml}
       <div class="fleet-card-body">
@@ -494,7 +494,7 @@ async function renderHomeFleet() {
           ${v.transmission ? `<span>⚙ ${v.transmission}</span>` : ''}
         </div>
         <div class="fleet-card-price">${v.pricePerDay || v.basePrice || '–'} €<span>/jour</span></div>
-        <a href="./vehicules.html" class="btn primary fleet-reserve-btn">Réserver</a>
+        <a href="./vehicules.html" class="btn primary fleet-reserve-btn">Reserve</a>
       </div>
     `;
     grid.appendChild(card);
@@ -538,19 +538,19 @@ async function renderVehicles() {
       ${imageElement}
       <div class="vehicle-info">
         <h3 class="vehicle-name filter-link">${vehicle.name}</h3>
-        <p class="vehicle-model"><strong>Modèle :</strong> ${vehicle.name}</p>
-        <p class="vehicle-price"><strong>${formatMoney(vehicle.pricePerDay)}</strong> / jour</p>
+        <p class="vehicle-model"><strong>Model:</strong> ${vehicle.name}</p>
+        <p class="vehicle-price"><strong>${formatMoney(vehicle.pricePerDay)}</strong> / day</p>
         <p class="vehicle-description">${vehicle.description}</p>
         <div class="vehicle-meta">
-          <span>Catégorie: ${vehicle.category}</span>
-          <span>Places: ${vehicle.seats}</span>
+          <span>Category: ${vehicle.category}</span>
+          <span>Seats: ${vehicle.seats}</span>
         </div>
         <div class="vehicle-meta">
-          <span>Carburant: ${vehicle.fuel}</span>
-          <span>Bagages: ${vehicle.luggage}</span>
+          <span>Fuel: ${vehicle.fuel}</span>
+          <span>Luggage: ${vehicle.luggage}</span>
         </div>
         <div class="vehicle-actions">
-          <button class="btn primary" data-id="${vehicle.id}">${reserved ? 'Indisponible' : 'Réserver'}</button>
+          <button class="btn primary" data-id="${vehicle.id}">${reserved ? 'Unavailable' : 'Reserve'}</button>
         </div>
       </div>
     `;
@@ -567,6 +567,15 @@ async function renderVehicles() {
     button.disabled = reserved;
     button.addEventListener('click', () => {
       if (reserved) return;
+      const user = getCurrentUser();
+      if (!user) {
+        window.location.href = './login.html';
+        return;
+      }
+      if (!user.profileComplete) {
+        window.location.href = `./complete-profile.html?redirect=${encodeURIComponent('./reservations.html?vehicleId=' + vehicle.id)}`;
+        return;
+      }
       window.location.href = `./reservations.html?vehicleId=${encodeURIComponent(vehicle.id)}`;
     });
 
@@ -577,10 +586,10 @@ async function renderVehicles() {
       const readMoreBtn = document.createElement('button');
       readMoreBtn.type = 'button';
       readMoreBtn.className = 'btn tertiary read-more';
-      readMoreBtn.textContent = 'Lire la suite';
+      readMoreBtn.textContent = 'Read more';
       readMoreBtn.addEventListener('click', () => {
         const expanded = descEl.classList.toggle('expanded');
-        readMoreBtn.textContent = expanded ? 'Réduire' : 'Lire la suite';
+        readMoreBtn.textContent = expanded ? 'Show less' : 'Read more';
       });
       actionsDiv.insertBefore(readMoreBtn, actionsDiv.firstChild);
     }
@@ -599,7 +608,7 @@ async function renderVehicles() {
 function showVehicleModal(vehicle) {
   const currentUser = getCurrentUser();
   if (!currentUser) {
-    openAuthModal('login');
+    window.location.href = './login.html';
     return;
   }
   const backdrop = document.getElementById('modalBackdrop');
@@ -744,8 +753,8 @@ function showVehicleModal(vehicle) {
       renderVehicles();
       displayReservationSummary();
       const emailStatus = data.emailNotification?.sent
-        ? 'Un email de confirmation a été envoyé.'
-        : 'Réservation confirmée mais l’email n’a pas pu être envoyé.';
+        ? 'A confirmation email has been sent.'
+        : 'Reservation confirmed, but the confirmation email could not be sent.';
       alert(`Reservation confirmed! ${emailStatus}`);
     } catch (error) {
       console.error('Reservation error:', error);
@@ -851,7 +860,7 @@ async function displayReservationSummary() {
       <button class="btn primary" id="reservationLogin">Login</button>
     `;
     container.appendChild(prompt);
-    document.getElementById('reservationLogin').addEventListener('click', () => openAuthModal('login'));
+    document.getElementById('reservationLogin').addEventListener('click', () => { window.location.href = './login.html'; });
     return;
   }
 
@@ -898,12 +907,11 @@ function renderReservationBooking() {
     const authPrompt = document.createElement('div');
     authPrompt.className = 'confirmation-card';
     authPrompt.innerHTML = `
-      <h3>Connexion requise</h3>
-      <p>Vous devez vous connecter ou vous inscrire pour réserver un véhicule.</p>
-      <button class="btn primary" id="bookingLogin">Login</button>
+      <h3>Login Required</h3>
+      <p>You must log in or sign up to make a reservation.</p>
+      <a href="./login.html" class="btn primary">Login</a>
     `;
     bookingContainer.appendChild(authPrompt);
-    document.getElementById('bookingLogin').addEventListener('click', () => openAuthModal('login'));
     return;
   }
 
@@ -911,9 +919,9 @@ function renderReservationBooking() {
   if (!vehicle) {
     bookingContainer.innerHTML = `
       <div class="confirmation-card">
-        <h3>Véhicule introuvable</h3>
-        <p>Retournez à la page des véhicules pour choisir une autre option.</p>
-        <a href="./vehicules.html" class="btn primary">Voir les véhicules</a>
+        <h3>Vehicle not found</h3>
+        <p>Go back to the vehicles page to choose another option.</p>
+        <a href="./vehicules.html" class="btn primary">View Vehicles</a>
       </div>
     `;
     return;
@@ -922,22 +930,22 @@ function renderReservationBooking() {
   const bookingCard = document.createElement('div');
   bookingCard.className = 'reservation-card';
   bookingCard.innerHTML = `
-    <h2>Réserver : ${vehicle.name}</h2>
+    <h2>Reserve: ${vehicle.name}</h2>
     <div class="vehicle-details">
       <img src="${vehicle.image}" alt="${vehicle.name}">
       <div class="vehicle-info">
-        <p><strong>Prix :</strong> ${formatMoney(vehicle.pricePerDay)} / jour</p>
-        <p><strong>Catégorie :</strong> ${vehicle.category}</p>
-        <p><strong>Places :</strong> ${vehicle.seats}</p>
-        <p><strong>Carburant :</strong> ${vehicle.fuel}</p>
-        <p><strong>Bagages :</strong> ${vehicle.luggage}</p>
-        <p><strong>Description :</strong> ${vehicle.description}</p>
+        <p><strong>Price:</strong> ${formatMoney(vehicle.pricePerDay)} / day</p>
+        <p><strong>Category:</strong> ${vehicle.category}</p>
+        <p><strong>Seats:</strong> ${vehicle.seats}</p>
+        <p><strong>Fuel:</strong> ${vehicle.fuel}</p>
+        <p><strong>Luggage:</strong> ${vehicle.luggage}</p>
+        <p><strong>Description:</strong> ${vehicle.description}</p>
       </div>
     </div>
     <form id="vehicleBookingForm" class="field-group">
-      <label>Date de début</label>
+      <label>Start Date</label>
       <input type="date" id="bookingStartDate" required>
-      <label>Date de fin</label>
+      <label>End Date</label>
       <input type="date" id="bookingEndDate" required>
       <label>Méthode de paiement</label>
       <select id="bookingPaymentMethod" required>
@@ -1016,17 +1024,17 @@ function renderReservationBooking() {
       });
       const data = await response.json();
       if (!response.ok) {
-        return alert(data.error || 'Impossible de créer la réservation.');
+        return alert(data.error || 'Unable to create the reservation.');
       }
 
       const emailStatus = data.emailNotification?.sent
-        ? 'Un message de confirmation a été envoyé.'
-        : 'Réservation confirmée, mais l’email n’a pas pu être envoyé.';
-      alert(`Réservation confirmée ! ${emailStatus}`);
+        ? 'A confirmation email has been sent.'
+        : 'Reservation confirmed, but the confirmation email could not be sent.';
+      alert(`Reservation confirmed! ${emailStatus}`);
       window.location.href = './reservations.html';
     } catch (error) {
       console.error('Booking error:', error);
-      alert('Erreur de réservation. Veuillez réessayer plus tard.');
+      alert('Reservation failed. Please try again.');
     }
   });
 }
@@ -1075,7 +1083,7 @@ async function renderDashboard() {
       <button class="btn primary" id="dashboardLogin">Login</button>
     `;
     container.appendChild(prompt);
-    document.getElementById('dashboardLogin').addEventListener('click', () => openAuthModal('login'));
+    document.getElementById('dashboardLogin').addEventListener('click', () => { window.location.href = './login.html'; });
     return;
   }
 
@@ -1158,12 +1166,11 @@ async function renderAdminUsers(container) {
   if (!currentUser) {
     container.innerHTML = `
       <div class="confirmation-card">
-        <h3>Connexion requise</h3>
-        <p>Vous devez être connecté en tant que superadmin pour accéder à cet espace.</p>
-        <button class="btn primary" id="adminLoginButton">Login</button>
+        <h3>Login Required</h3>
+        <p>You must be logged in as superadmin to access this area.</p>
+        <a href="./login.html" class="btn primary">Login</a>
       </div>
     `;
-    document.getElementById('adminLoginButton').addEventListener('click', () => openAuthModal('login'));
     return;
   }
 
