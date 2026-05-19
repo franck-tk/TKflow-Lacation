@@ -4,7 +4,7 @@
     "username": "Todjoum Kemegne Franck Junior",
     "phone": "+237677659294",
     "email": "todjoumfranck@gmail.com",
-    "password": "2805Ca66",
+    "password": "$2b$10$bUFIZAfm4WmDp2MGbXTWOO952o0AnJnUnxOzwoSq3PeO8Wlfu/x5q",
     "googleAuth": false,
     "appleAuth": false,
     "role": "superadmin",
@@ -12,5 +12,19 @@
     "cniBack": "",
     "portrait": "",
     "createdAt": "2026-05-18T12:00:00Z"
+  },
+  {
+    "id": "8fc62203-ac7f-4906-a61a-1f46a56b690b",
+    "username": "Bogne  Elsa",
+    "phone": "+237 655456995",
+    "email": "bogneleonelle@gmail.com",
+    "password": "$2b$10$7Fl3evFtpPhz/46pvIswVOoEKzbKb5oApTH0BjSQ7TZqvagBpTyKi",
+    "role": "user",
+    "googleAuth": false,
+    "appleAuth": false,
+    "cniFront": "d265546f-6b70-489a-a547-40530dd7eb65-Toyota Corolla Sport.webp",
+    "cniBack": "4f9500e1-fe53-4627-bd0c-8345a9654dfa-Toyota Corolla Executive.webp",
+    "portrait": "c0abedf6-582c-47a1-bb58-a1dd3c9c6c3c-Toyota Corolla Premium.jpg",
+    "createdAt": "2026-05-19T10:15:22.676Z"
   }
 ]

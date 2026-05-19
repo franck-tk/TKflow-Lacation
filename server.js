@@ -5,6 +5,7 @@ const cors = require('cors');
 const multer = require('multer');
 const nodemailer = require('nodemailer');
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -157,7 +158,7 @@ if (!hasSuperadmin) {
     username: 'superadmin',
     phone: '',
     email: 'admin@tkflow.com',
-    password: 'admin123',
+    password: bcrypt.hashSync('admin123', 10),
     role: 'superadmin',
     googleAuth: false,
     appleAuth: false,
@@ -167,6 +168,15 @@ if (!hasSuperadmin) {
     createdAt: new Date().toISOString()
   });
   writeData(USERS_FILE, existingUsers);
+} else {
+  let changed = false;
+  existingUsers.forEach(user => {
+    if (user.password && !user.password.startsWith('$2')) {
+      user.password = bcrypt.hashSync(user.password, 10);
+      changed = true;
+    }
+  });
+  if (changed) writeData(USERS_FILE, existingUsers);
 }
 
 function sanitizeUser(user) {
@@ -201,7 +211,7 @@ app.post('/api/register', upload.fields([
   { name: 'cniFront', maxCount: 1 },
   { name: 'cniBack', maxCount: 1 },
   { name: 'portrait', maxCount: 1 }
-]), (req, res) => {
+]), async (req, res) => {
   const { name, phone, email, password } = req.body;
   const users = readData(USERS_FILE);
 
@@ -209,22 +219,24 @@ app.post('/api/register', upload.fields([
     return res.status(400).json({ error: 'Name, email and password are required' });
   }
 
-  if (users.some(user => user.email === email || user.phone === phone)) {
+  if (users.some(user => user.email === email || (phone && user.phone === phone))) {
     return res.status(400).json({ error: 'User already exists' });
   }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   const newUser = {
     id: uuidv4(),
     username: name,
     phone,
     email,
-    password,
+    password: hashedPassword,
     role: 'user',
     googleAuth: false,
     appleAuth: false,
-    cniFront: req.files.cniFront ? req.files.cniFront[0].filename : '',
-    cniBack: req.files.cniBack ? req.files.cniBack[0].filename : '',
-    portrait: req.files.portrait ? req.files.portrait[0].filename : '',
+    cniFront: req.files && req.files.cniFront ? req.files.cniFront[0].filename : '',
+    cniBack: req.files && req.files.cniBack ? req.files.cniBack[0].filename : '',
+    portrait: req.files && req.files.portrait ? req.files.portrait[0].filename : '',
     createdAt: new Date().toISOString()
   };
 
@@ -233,12 +245,12 @@ app.post('/api/register', upload.fields([
   res.json({ user: sanitizeUser(newUser), message: 'Registration successful' });
 });
 
-app.post('/api/login', (req, res) => {
+app.post('/api/login', async (req, res) => {
   const { login, password } = req.body;
   const users = readData(USERS_FILE);
-  const user = users.find(u => (u.email === login || u.phone === login) && u.password === password);
+  const user = users.find(u => u.email === login || u.phone === login);
 
-  if (!user) {
+  if (!user || !(await bcrypt.compare(password, user.password))) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
 

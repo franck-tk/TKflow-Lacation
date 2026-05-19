@@ -501,14 +501,7 @@ function openAuthModal(mode) {
     `;
   }
 
-  const providerGrid = document.createElement('div');
-  providerGrid.className = 'auth-alternative';
-  providerGrid.innerHTML = `
-    <button type="button" class="btn secondary" id="googleAuth">Continue with Google</button>
-  `;
-
   modal.appendChild(form);
-  modal.appendChild(providerGrid);
 
   backdrop.addEventListener('click', closeModal);
 
@@ -545,8 +538,6 @@ function openAuthModal(mode) {
     }
   });
 
-  const googleBtn = document.getElementById('googleAuth');
-  if (googleBtn) googleBtn.addEventListener('click', () => handleSocialAuth('google'));
 }
 
 function closeModal() {
@@ -713,35 +704,6 @@ async function handleLogin() {
   }
 }
 
-async function handleSocialAuth(provider) {
-  if (provider !== 'google') return;
-
-  const email = prompt('Enter your Google email to sign in:');
-  if (!email) return;
-  const name = email.split('@')[0];
-
-  try {
-    const response = await fetch(`${API_BASE}/auth/google`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, name })
-    });
-    const data = await response.json();
-
-    if (!response.ok) {
-      alert(data.error || 'Authentication failed');
-      return;
-    }
-
-    setCurrentUser(data.user);
-    closeModal();
-    renderAuthButtons();
-    alert('Signed in with Google successfully.');
-  } catch (error) {
-    console.error('Social auth error:', error);
-    alert('Authentication failed. Please try again.');
-  }
-}
 
 async function renderVehicles() {
   const grid = document.getElementById('vehiclesGrid');
