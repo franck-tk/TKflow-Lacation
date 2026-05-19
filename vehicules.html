@@ -10,11 +10,21 @@
 
 <header class="site-header">
   <div class="brand">TKflow Location</div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="vehicules.html" class="active">Vehicules</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Menu">&#9776;</button>
+  <div class="nav-wrapper" id="navWrapper">
+    <nav class="main-nav">
+      <a href="./index.html">Accueil</a>
+      <a href="./about.html">À propos</a>
+      <a href="./vehicules.html" class="active">Véhicules</a>
+      <a href="./reservations.html">Réservations</a>
+      <a href="./dashboard.html">Dashboard</a>
+      <a href="./contact.html">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a href="./admin-vehicles.html" id="adminButton" class="btn primary hidden">Admin Panel</a>
+      <div class="auth-actions"></div>
+    </div>
+  </div>
 </header>
 
 <main class="page-content">

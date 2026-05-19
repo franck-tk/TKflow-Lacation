@@ -413,8 +413,9 @@ function renderAuthButtons() {
   authAreas.forEach(area => {
     area.innerHTML = '';
     if (current) {
+      const firstName = (current.username || current.email || '').split(' ')[0];
       const welcome = document.createElement('span');
-      welcome.textContent = `Hi, ${current.username || current.email || current.phone}`;
+      welcome.textContent = `Bonjour, ${firstName}`;
       welcome.className = 'user-welcome';
       area.appendChild(welcome);
       if (current.role) {
@@ -425,285 +426,42 @@ function renderAuthButtons() {
       }
       const logout = document.createElement('button');
       logout.className = 'btn secondary';
-      logout.textContent = 'Logout';
+      logout.textContent = 'Déconnexion';
       logout.addEventListener('click', () => {
         clearCurrentUser();
         renderAuthButtons();
         displayReservationSummary();
       });
-      area.appendChild(welcome);
       area.appendChild(logout);
     } else {
-      const login = document.createElement('button');
+      const login = document.createElement('a');
       login.className = 'btn secondary';
-      login.textContent = 'Login';
-      login.id = 'loginButton';
-      login.addEventListener('click', () => openAuthModal('login'));
-      const register = document.createElement('button');
+      login.textContent = 'Connexion';
+      login.href = './login.html';
+      const register = document.createElement('a');
       register.className = 'btn primary';
-      register.textContent = 'Sign Up';
-      register.id = 'registerButton';
-      register.addEventListener('click', () => openAuthModal('register'));
+      register.textContent = "S'inscrire";
+      register.href = './signup.html';
       area.appendChild(login);
       area.appendChild(register);
     }
   });
 }
 
-function openAuthModal(mode) {
-  const backdrop = document.getElementById('modalBackdrop');
-  const modal = document.getElementById('authModal');
-  backdrop.classList.remove('hidden');
-  modal.classList.remove('hidden');
-  modal.innerHTML = '';
-  const close = document.createElement('button');
-  close.className = 'modal-close';
-  close.textContent = '✕';
-  close.addEventListener('click', closeModal);
-  modal.appendChild(close);
-
-  const title = document.createElement('h2');
-  title.textContent = mode === 'login' ? 'Login to TKflow' : 'Create a TKflow account';
-  modal.appendChild(title);
-
-  const form = document.createElement('form');
-  form.className = 'field-group';
-
-  if (mode === 'register') {
-    form.innerHTML = `
-      <label>Name</label><input type="text" id="authName" required placeholder="Full name">
-      <label>Phone</label><input type="tel" id="authPhone" required placeholder="+221 77 000 0000">
-      <label>Email</label><input type="email" id="authEmail" required placeholder="you@example.com">
-      <label>Password</label><input type="password" id="authPassword" required placeholder="Create password">
-      <label>Confirm password</label><input type="password" id="authConfirmPassword" required placeholder="Confirm password">
-      <label>CNI front image</label>
-      <div class="file-with-camera">
-        <input type="file" id="authCniFront" accept="image/*" required>
-        <button type="button" class="btn tertiary" id="takeFront">Take Photo</button>
-      </div>
-      <label>CNI back image</label>
-      <div class="file-with-camera">
-        <input type="file" id="authCniBack" accept="image/*" required>
-        <button type="button" class="btn tertiary" id="takeBack">Take Photo</button>
-      </div>
-      <label>Portrait photo</label>
-      <div class="file-with-camera">
-        <input type="file" id="authPortrait" accept="image/*" required>
-        <button type="button" class="btn tertiary" id="takePortrait">Take Photo</button>
-      </div>
-      <button class="btn primary" type="submit">Create account</button>
-    `;
-  } else {
-    form.innerHTML = `
-      <label>Phone or Email</label><input type="text" id="authLogin" required placeholder="Phone or email">
-      <label>Password</label><input type="password" id="authLoginPassword" required placeholder="Password">
-      <button class="btn primary" type="submit">Login</button>
-    `;
-  }
-
-  modal.appendChild(form);
-
-  backdrop.addEventListener('click', closeModal);
-
-  // Attach camera buttons if present
-  const takeFrontBtn = document.getElementById('takeFront');
-  const takeBackBtn = document.getElementById('takeBack');
-  const takePortraitBtn = document.getElementById('takePortrait');
-  if (takeFrontBtn) takeFrontBtn.addEventListener('click', () => openCameraFor('authCniFront'));
-  if (takeBackBtn) takeBackBtn.addEventListener('click', () => openCameraFor('authCniBack'));
-  if (takePortraitBtn) takePortraitBtn.addEventListener('click', () => openCameraFor('authPortrait'));
-
-  const cameraSupported = navigator.mediaDevices && navigator.mediaDevices.getUserMedia;
-  const secureContext = window.isSecureContext || ['localhost', '127.0.0.1', '0.0.0.0'].includes(location.hostname);
-  if (!cameraSupported || !secureContext) {
-    [takeFrontBtn, takeBackBtn, takePortraitBtn].forEach(btn => {
-      if (btn) {
-        btn.disabled = true;
-        btn.title = 'Camera unavailable. Upload the photo manually.';
-      }
-    });
-
-    const cameraNotice = document.createElement('p');
-    cameraNotice.className = 'camera-note';
-    cameraNotice.textContent = 'La capture photo nécessite un accès caméra sécurisé. Si elle est indisponible, téléchargez l’image manuellement.';
-    form.appendChild(cameraNotice);
-  }
-
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    if (mode === 'register') {
-      handleRegister();
-    } else {
-      handleLogin();
-    }
+function initHamburger() {
+  const btn = document.getElementById('hamburgerBtn');
+  const wrapper = document.getElementById('navWrapper');
+  if (!btn || !wrapper) return;
+  btn.addEventListener('click', () => {
+    const open = wrapper.classList.toggle('open');
+    btn.textContent = open ? '\u2715' : '\u2630';
   });
-
 }
 
 function closeModal() {
-  document.getElementById('modalBackdrop').classList.add('hidden');
-  document.getElementById('authModal').classList.add('hidden');
+  document.getElementById('modalBackdrop')?.classList.add('hidden');
   document.getElementById('vehicleModal')?.classList.add('hidden');
 }
-
-// Camera capture overlay
-let _cameraStream = null;
-function openCameraFor(inputId) {
-  const input = document.getElementById(inputId);
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    alert('Camera not supported. Please upload your photo manually.');
-    if (input) input.click();
-    return;
-  }
-
-  const secureContext = window.isSecureContext || ['localhost', '127.0.0.1', '0.0.0.0'].includes(location.hostname);
-  if (!secureContext) {
-    alert('Camera access requires HTTPS or localhost. Importez le fichier manuellement.');
-    if (input) input.click();
-    return;
-  }
-
-  // create overlay
-  let overlay = document.getElementById('cameraOverlay');
-  if (!overlay) {
-    overlay = document.createElement('div');
-    overlay.id = 'cameraOverlay';
-    overlay.innerHTML = `
-      <div class="camera-card">
-        <video id="cameraVideo" autoplay playsinline></video>
-        <div class="camera-controls">
-          <button id="cameraCapture" class="btn primary">Capture</button>
-          <button id="cameraCancel" class="btn secondary">Cancel</button>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(overlay);
-  }
-
-  const video = document.getElementById('cameraVideo');
-  overlay.classList.remove('hidden');
-
-  navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-    .then(stream => {
-      _cameraStream = stream;
-      video.srcObject = stream;
-      video.play();
-    }).catch(err => {
-      closeCameraOverlay();
-      if (err?.name === 'NotAllowedError' || err?.name === 'PermissionDeniedError' || err?.name === 'SecurityError') {
-        alert('Permission caméra refusée. Utilisez l’import manuel de fichiers.');
-      } else {
-        alert('Camera not available: ' + err.message);
-      }
-      if (input) input.click();
-    });
-
-  document.getElementById('cameraCancel').onclick = () => closeCameraOverlay();
-  document.getElementById('cameraCapture').onclick = async () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth || 1280;
-    canvas.height = video.videoHeight || 720;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    canvas.toBlob(async blob => {
-      const file = new File([blob], `${inputId}.png`, { type: 'image/png' });
-      const input = document.getElementById(inputId);
-      if (input) {
-        const dataTransfer = new DataTransfer();
-        dataTransfer.items.add(file);
-        input.files = dataTransfer.files;
-      }
-      closeCameraOverlay();
-    }, 'image/png');
-  };
-}
-
-function closeCameraOverlay() {
-  const overlay = document.getElementById('cameraOverlay');
-  if (overlay) overlay.classList.add('hidden');
-  if (_cameraStream) {
-    _cameraStream.getTracks().forEach(t => t.stop());
-    _cameraStream = null;
-  }
-}
-
-async function handleRegister() {
-  const name = document.getElementById('authName').value.trim();
-  const phone = document.getElementById('authPhone').value.trim();
-  const email = document.getElementById('authEmail').value.trim();
-  const password = document.getElementById('authPassword').value.trim();
-  const confirmPassword = document.getElementById('authConfirmPassword').value.trim();
-  const cniFront = document.getElementById('authCniFront').files[0];
-  const cniBack = document.getElementById('authCniBack').files[0];
-  const portrait = document.getElementById('authPortrait').files[0];
-
-  if (!name || !phone || !email || !password || !confirmPassword || !cniFront || !cniBack || !portrait) {
-    alert('Please complete every field and upload identity documents.');
-    return;
-  }
-  if (password !== confirmPassword) {
-    alert('Passwords do not match.');
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append('name', name);
-  formData.append('phone', phone);
-  formData.append('email', email);
-  formData.append('password', password);
-  formData.append('cniFront', cniFront);
-  formData.append('cniBack', cniBack);
-  formData.append('portrait', portrait);
-
-  try {
-    const response = await fetch(`${API_BASE}/register`, {
-      method: 'POST',
-      body: formData
-    });
-    const data = await response.json();
-
-    if (!response.ok) {
-      alert(data.error || 'Registration failed');
-      return;
-    }
-
-    setCurrentUser(data.user);
-    closeModal();
-    renderAuthButtons();
-    alert('Registration successful. You are now logged in.');
-  } catch (error) {
-    console.error('Registration error:', error);
-    alert('Registration failed. Please try again.');
-  }
-}
-
-async function handleLogin() {
-  const loginValue = document.getElementById('authLogin').value.trim();
-  const password = document.getElementById('authLoginPassword').value.trim();
-
-  try {
-    const response = await fetch(`${API_BASE}/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ login: loginValue, password })
-    });
-    const data = await response.json();
-
-    if (!response.ok) {
-      alert(data.error || 'Login failed');
-      return;
-    }
-
-    setCurrentUser(data.user);
-    closeModal();
-    renderAuthButtons();
-    alert('Welcome back! You are logged in.');
-  } catch (error) {
-    console.error('Login error:', error);
-    alert('Login failed. Please try again.');
-  }
-}
-
 
 async function renderVehicles() {
   const grid = document.getElementById('vehiclesGrid');
@@ -1465,18 +1223,12 @@ async function setupPage() {
   await loadVehicles();
   renderFilterControls();
   renderAuthButtons();
+  initHamburger();
   await renderVehicles();
   await renderReservationBooking();
   await displayReservationSummary();
   await renderDashboard();
   setupContactForm();
-
-  document.querySelectorAll('#loginButton').forEach(button => {
-    button.addEventListener('click', () => openAuthModal('login'));
-  });
-  document.querySelectorAll('#registerButton').forEach(button => {
-    button.addEventListener('click', () => openAuthModal('register'));
-  });
 }
 
 window.addEventListener('load', setupPage);

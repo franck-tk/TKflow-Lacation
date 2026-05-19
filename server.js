@@ -216,11 +216,11 @@ app.post('/api/register', upload.fields([
   const users = readData(USERS_FILE);
 
   if (!name || !email || !password) {
-    return res.status(400).json({ error: 'Name, email and password are required' });
+    return res.status(400).json({ error: 'Nom, email et mot de passe requis.' });
   }
 
   if (users.some(user => user.email === email || (phone && user.phone === phone))) {
-    return res.status(400).json({ error: 'User already exists' });
+    return res.status(400).json({ error: 'Email déjà utilisé.' });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -251,7 +251,7 @@ app.post('/api/login', async (req, res) => {
   const user = users.find(u => u.email === login || u.phone === login);
 
   if (!user || !(await bcrypt.compare(password, user.password))) {
-    return res.status(401).json({ error: 'Invalid credentials' });
+    return res.status(401).json({ error: 'Mot de passe incorrect.' });
   }
 
   res.json({ user: sanitizeUser(user), message: 'Login successful' });
