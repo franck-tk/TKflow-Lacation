@@ -1,0 +1,41 @@
+Rebuild TKflow Location completely for production:
+
+AUTHENTICATION:
+1. Create separate /login and /signup pages
+   - /login: Email + Mot de passe, bouton "Se connecter", lien "Pas de compte ? S'inscrire"
+   - /signup: Nom complet + Email + Mot de passe + Confirmer, bouton "Créer mon compte", lien "Déjà un compte ? Se connecter"
+2. Hash passwords with bcrypt, auto-login after signup, redirect to homepage with "Bonjour, [Prénom]"
+3. Remove all Google buttons and phone number fields
+4. French error messages only: "Email déjà utilisé", "Mot de passe incorrect", "Les mots de passe ne correspondent pas", "Compte créé avec succès"
+
+NAVBAR (responsive + dynamique):
+1. Make "TKFLOW LOCATION" logo clickable to /
+2. Desktop (>768px): horizontal. Mobile (<768px): show only logo + hamburger ≡, click opens vertical dropdown
+3. If NOT logged in: show Accueil, À propos, Véhicules, Contact, Connexion, S'inscrire — HIDE Mes Réservations, Tableau de bord, Panneau Admin
+4. If LOGGED IN: show Accueil, Véhicules, Mes Réservations, Tableau de bord, Contact, Bonjour [Prénom], Déconnexion — HIDE Connexion, S'inscrire, À propos
+5. If role=superadmin: also show Panneau Admin
+
+TRADUCTION 100% FRANÇAIS:
+- Dashboard → Tableau de bord
+- Reservations → Mes Réservations  
+- Admin Panel → Panneau Admin
+- Login → Connexion
+- Sign Up → S'inscrire
+- Logout → Déconnexion
+- Home → Accueil
+- About → À propos
+- Vehicles → Véhicules
+- Browse Vehicles → Voir les véhicules
+- My Reservations → Mes réservations
+
+HOMEPAGE PROFESSIONNELLE:
+Rebuild with sections:
+1. Hero: "Conduisez les meilleures voitures avec TKflow", sous-titre "Réservations sécurisées avec Orange Money et MTN Mobile Money", boutons "Voir les véhicules" + "Comment ça marche"
+2. À propos: texte "TKflow Location, location premium à Douala depuis 2024. Véhicules vérifiés, GPS, assurance incluse." avec image
+3. Comment ça marche: 3 cartes - 1) Choisissez, 2) Réservez et payez, 3) Récupérez
+4. Notre flotte: grille 6 véhicules de la base avec photo, prix/jour, bouton Réserver
+5. Pourquoi nous: 4 avantages - Mobile Money, CNI vérifiée, GPS 24/7, Support WhatsApp
+6. Avis clients: 3 témoignages
+7. Footer contact
+
+Design moderne noir/orange, espacé, cartes avec ombres.

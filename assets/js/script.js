@@ -430,6 +430,7 @@ function renderAuthButtons() {
       logout.addEventListener('click', () => {
         clearCurrentUser();
         renderAuthButtons();
+        renderNav();
         displayReservationSummary();
       });
       area.appendChild(logout);
@@ -455,6 +456,48 @@ function initHamburger() {
   btn.addEventListener('click', () => {
     const open = wrapper.classList.toggle('open');
     btn.textContent = open ? '\u2715' : '\u2630';
+  });
+}
+
+function renderNav() {
+  const current = getCurrentUser();
+  const isLoggedIn = !!current;
+  const isSuperAdmin = current && current.role === 'superadmin';
+  document.querySelectorAll('[data-nav="guest"]').forEach(el => el.classList.toggle('hidden', isLoggedIn));
+  document.querySelectorAll('[data-nav="user"]').forEach(el => el.classList.toggle('hidden', !isLoggedIn));
+  document.querySelectorAll('[data-nav="admin"]').forEach(el => el.classList.toggle('hidden', !isSuperAdmin));
+}
+
+async function renderHomeFleet() {
+  const grid = document.getElementById('homeFleetGrid');
+  if (!grid) return;
+  if (!VEHICLES.length) await loadVehicles();
+  grid.innerHTML = '';
+  const preview = VEHICLES.slice(0, 6);
+  if (!preview.length) {
+    grid.innerHTML = '<p class="loading-note">Aucun véhicule disponible pour le moment.</p>';
+    return;
+  }
+  preview.forEach(v => {
+    const card = document.createElement('div');
+    card.className = 'home-fleet-card';
+    const imgHtml = v.image
+      ? `<img src="${v.image}" alt="${v.name}" class="fleet-car-img">`
+      : `<div class="fleet-car-placeholder"><span>${v.category || 'Véhicule'}</span></div>`;
+    card.innerHTML = `
+      ${imgHtml}
+      <div class="fleet-card-body">
+        <h3>${v.name || (v.brand + ' ' + v.model)}</h3>
+        <div class="fleet-card-meta">
+          ${v.seats ? `<span>👤 ${v.seats} pl.</span>` : ''}
+          ${v.fuel ? `<span>⛽ ${v.fuel}</span>` : ''}
+          ${v.transmission ? `<span>⚙ ${v.transmission}</span>` : ''}
+        </div>
+        <div class="fleet-card-price">${v.pricePerDay || v.basePrice || '–'} €<span>/jour</span></div>
+        <a href="./vehicules.html" class="btn primary fleet-reserve-btn">Réserver</a>
+      </div>
+    `;
+    grid.appendChild(card);
   });
 }
 
@@ -1223,8 +1266,10 @@ async function setupPage() {
   await loadVehicles();
   renderFilterControls();
   renderAuthButtons();
+  renderNav();
   initHamburger();
   await renderVehicles();
+  await renderHomeFleet();
   await renderReservationBooking();
   await displayReservationSummary();
   await renderDashboard();
@@ -1232,7 +1277,3 @@ async function setupPage() {
 }
 
 window.addEventListener('load', setupPage);
-
-window.addEventListener("load", () => {
-  showAdminButton();
-});

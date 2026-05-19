@@ -1,92 +1,227 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TKflow Car Rental</title>
+  <title>TKflow Location – Location de voitures à Douala</title>
   <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
 <body>
 <header class="site-header">
-  <div class="brand">TKflow Location</div>
+  <a href="./index.html" class="brand">TKflow Location</a>
   <button class="hamburger" id="hamburgerBtn" aria-label="Menu">&#9776;</button>
   <div class="nav-wrapper" id="navWrapper">
     <nav class="main-nav">
       <a href="./index.html" class="active">Accueil</a>
-      <a href="./about.html">À propos</a>
+      <a href="./about.html" data-nav="guest">À propos</a>
       <a href="./vehicules.html">Véhicules</a>
-      <a href="./reservations.html">Réservations</a>
-      <a href="./dashboard.html">Dashboard</a>
+      <a href="./reservations.html" data-nav="user" class="hidden">Mes Réservations</a>
+      <a href="./dashboard.html" data-nav="user" class="hidden">Tableau de bord</a>
       <a href="./contact.html">Contact</a>
+      <a href="./admin-vehicles.html" data-nav="admin" class="hidden">Panneau Admin</a>
     </nav>
     <div class="header-actions">
-      <a href="./admin-vehicles.html" id="adminButton" class="btn primary hidden">Admin Panel</a>
       <div class="auth-actions"></div>
     </div>
   </div>
 </header>
 
-  <main>
-    <section class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">Premium Car Rental</p>
-        <h1>Drive the best cars with TKflow</h1>
-        <p>Secure, fast, and modern vehicle reservations with Orange Money and MTN Mobile Money payment support.</p>
-        <div class="hero-actions">
-          <a href="./vehicules.html" class="btn primary">Browse Vehicles</a>
-          <a href="./reservations.html" class="btn secondary">My Reservations</a>
+<main class="home-main">
+
+  <!-- 1. HERO -->
+  <section class="home-hero">
+    <div class="home-hero-copy">
+      <span class="eyebrow">Location Premium · Douala</span>
+      <h1>Conduisez les meilleures voitures avec TKflow</h1>
+      <p>Réservations sécurisées avec Orange Money et MTN Mobile Money. Véhicules vérifiés, GPS et assurance incluse.</p>
+      <div class="hero-actions">
+        <a href="./vehicules.html" class="btn primary">Voir les véhicules</a>
+        <a href="#comment-ca-marche" class="btn secondary">Comment ça marche</a>
+      </div>
+    </div>
+    <div class="home-hero-image">
+      <img src="./assets/images/Toyota Corolla Executive.webp" alt="TKflow véhicule" class="hero-car-image">
+    </div>
+  </section>
+
+  <!-- 2. À PROPOS -->
+  <section class="about-section" id="apropos">
+    <div class="section-container">
+      <div class="about-grid">
+        <div class="about-content">
+          <span class="section-label">À propos de nous</span>
+          <h2>La location de voitures premium à Douala depuis 2024</h2>
+          <p>TKflow Location vous offre une expérience de location sans stress. Nos véhicules sont rigoureusement vérifiés, équipés de GPS et couverts par une assurance complète. Nous acceptons Orange Money et MTN Mobile Money pour des paiements rapides.</p>
+          <ul class="about-list">
+            <li>Flotte de 80+ véhicules vérifiés</li>
+            <li>Vérification d'identité CNI sécurisée</li>
+            <li>GPS intégré sur tous les véhicules</li>
+            <li>Assurance incluse dans chaque location</li>
+          </ul>
+        </div>
+        <div class="about-image-wrap">
+          <img src="./assets/images/Toyota Corolla Executive.webp" alt="Flotte TKflow" class="about-img">
+          <div class="about-badge">
+            <strong>80+</strong>
+            <span>Véhicules</span>
+          </div>
         </div>
       </div>
-      <div class="hero-image">
-  <img src="./assets/images/Toyota Corolla Executive.webp" alt="TKflow Hero Car" class="hero-car-image">
-</div>
-    </section>
+    </div>
+  </section>
 
-    <section class="features-section">
-      <div class="feature-card">
-        <h2>Secure Booking</h2>
-        <p>Authenticate by phone, email, or Google to securely reserve vehicles.</p>
+  <!-- 3. COMMENT ÇA MARCHE -->
+  <section class="how-section" id="comment-ca-marche">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-label">Simple et rapide</span>
+        <h2>Comment ça marche ?</h2>
       </div>
-      <div class="feature-card">
-        <h2>Verified Drivers</h2>
-        <p>Clients upload ID front/back and a clear portrait for safe rentals.</p>
-      </div>
-      <div class="feature-card">
-        <h2>24/7 Tracking</h2>
-        <p>Each car includes GPS tracking as an extra safety measure.</p>
-      </div>
-    </section>
-
-    <section class="highlight-section">
-      <div>
-        <h2>Fast reservation with transparent pricing</h2>
-        <p>See daily rates, reservation totals and confirm instantly via phone or email.</p>
-      </div>
-      <div class="highlight-grid">
-        <div class="small-card">
-          <strong>Simple reservation</strong>
-          <p>Choose a vehicle, select start/end dates, and pay with Orange or MTN Money.</p>
+      <div class="how-grid">
+        <div class="how-card">
+          <div class="how-number">01</div>
+          <h3>Choisissez votre véhicule</h3>
+          <p>Parcourez notre flotte, filtrez par catégorie, prix ou disponibilité et sélectionnez le véhicule qui vous convient.</p>
         </div>
-        <div class="small-card">
-          <strong>Vehicle Status</strong>
-          <p>Unavailable cars show a notice immediately before booking.</p>
+        <div class="how-card">
+          <div class="how-number">02</div>
+          <h3>Réservez et payez</h3>
+          <p>Confirmez vos dates, téléchargez votre CNI et payez facilement via Orange Money ou MTN Mobile Money.</p>
         </div>
-        <div class="small-card">
-          <strong>Identity verification</strong>
-          <p>CNI and portrait uploads protect both drivers and rental fleet.</p>
+        <div class="how-card">
+          <div class="how-number">03</div>
+          <h3>Récupérez votre voiture</h3>
+          <p>Rendez-vous à notre agence avec votre confirmation. Votre véhicule vous attend, prêt à partir.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-  </main>
+  <!-- 4. NOTRE FLOTTE -->
+  <section class="fleet-preview-section" id="flotte">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-label">Notre flotte</span>
+        <h2>Véhicules disponibles</h2>
+        <p class="section-sub">Découvrez une sélection de notre flotte. Tous les prix sont par jour.</p>
+      </div>
+      <div id="homeFleetGrid" class="home-fleet-grid">
+        <p class="loading-note">Chargement des véhicules…</p>
+      </div>
+      <div class="fleet-cta">
+        <a href="./vehicules.html" class="btn primary">Voir toute la flotte</a>
+      </div>
+    </div>
+  </section>
 
-  <footer class="site-footer">
-    <p>TKflow Location © 2026 • Secure car rental with GPS safety and flexible payments.</p>
-  </footer>
+  <!-- 5. POURQUOI NOUS -->
+  <section class="why-section" id="pourquoi">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-label">Nos avantages</span>
+        <h2>Pourquoi choisir TKflow ?</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">💳</div>
+          <h3>Mobile Money</h3>
+          <p>Paiement rapide et sécurisé via Orange Money et MTN Mobile Money. Pas de carte bancaire requise.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🪪</div>
+          <h3>CNI vérifiée</h3>
+          <p>Vérification d'identité complète pour protéger notre flotte et garantir la sécurité de tous.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">📡</div>
+          <h3>GPS 24/7</h3>
+          <p>Chaque véhicule est équipé d'un GPS actif pour votre sécurité et celle du véhicule.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">💬</div>
+          <h3>Support WhatsApp</h3>
+          <p>Notre équipe est disponible 7j/7 via WhatsApp pour répondre à toutes vos questions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div id="modalBackdrop" class="modal-backdrop hidden"></div>
-  <div id="authModal" class="auth-modal hidden"></div>
+  <!-- 6. AVIS CLIENTS -->
+  <section class="testimonials-section" id="avis">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-label">Ils nous font confiance</span>
+        <h2>Avis de nos clients</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p>"Service impeccable. La voiture était propre, le GPS fonctionnait parfaitement et le paiement via Orange Money était très simple."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">AM</div>
+            <div class="author-info">
+              <strong>Amadou M.</strong>
+              <span>Douala</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p>"J'ai loué un SUV pour un voyage en famille. TKflow a rendu ça facile et abordable. Je recommande vivement !"</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">FC</div>
+            <div class="author-info">
+              <strong>Fatima C.</strong>
+              <span>Yaoundé</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★☆</div>
+          <p>"Très bonne expérience. La réservation en ligne est rapide et l'équipe est réactive sur WhatsApp."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">JP</div>
+            <div class="author-info">
+              <strong>Jean-Pierre K.</strong>
+              <span>Douala</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <script src="./assets/js/script.js"></script>
+</main>
+
+<footer class="site-footer-full">
+  <div class="section-container footer-grid">
+    <div class="footer-brand">
+      <span class="brand">TKflow Location</span>
+      <p>Location de voitures premium à Douala. Flotte vérifiée, GPS, assurance incluse.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Navigation</h4>
+      <a href="./index.html">Accueil</a>
+      <a href="./vehicules.html">Véhicules</a>
+      <a href="./about.html">À propos</a>
+      <a href="./contact.html">Contact</a>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>📍 Douala, Cameroun</p>
+      <p>📞 +237 6XX XXX XXX</p>
+      <p>💬 WhatsApp disponible 7j/7</p>
+      <p>✉ contact@tkflow.cm</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>TKflow Location © 2026 · Location sécurisée avec paiement Mobile Money</p>
+  </div>
+</footer>
+
+<div id="modalBackdrop" class="modal-backdrop hidden"></div>
+<div id="authModal" class="auth-modal hidden"></div>
+
+<script src="./assets/js/script.js"></script>
 </body>
 </html>

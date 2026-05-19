@@ -12,5 +12,18 @@
     "cniBack": "",
     "portrait": "",
     "createdAt": "2026-05-18T12:00:00Z"
+  },
+  {
+    "id": "9c419648-d797-44fe-a6c7-36dcb7db455a",
+    "username": "Tcheukoua Ornelle Paola",
+    "email": "paolatcheukoua@gmail.com",
+    "password": "$2b$10$kMtpJWlrSm5TRjwe5aJfmuLQqlr5D8xF2uIKhhIDTi4kLnIDQF2Za",
+    "role": "user",
+    "googleAuth": false,
+    "appleAuth": false,
+    "cniFront": "",
+    "cniBack": "",
+    "portrait": "",
+    "createdAt": "2026-05-19T11:29:54.995Z"
   }
 ]
