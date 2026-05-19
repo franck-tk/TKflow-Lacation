@@ -10,6 +10,7 @@ let currentUser = null;
 
 function showAdminButton() {
   const adminBtn = document.getElementById("adminButton");
+  if (!adminBtn) return;
 
   const user = JSON.parse(localStorage.getItem("tkflow_current_user"));
 
