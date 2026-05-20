@@ -1,0 +1,120 @@
+rm -rf client/public/images && mkdir -p client/public/images && \
+cd client/public/images && \
+curl -sL "https://i.ibb.co/8XqxGwP/prado-douala.jpg" -o prado.jpg && \
+curl -sL "https://i.ibb.co/9wQjZ8K/hiace-blanc-dla.jpg" -o hiace.jpg && \
+curl -sL "https://i.ibb.co/6Y5V8nN/corolla-taxi-2018.jpg" -o corolla.jpg && \
+curl -sL "https://i.ibb.co/3kRJn7M/tucson-gris.jpg" -o tucson.jpg && \
+curl -sL "https://i.ibb.co/XZ8Qz9k/rav4-blanc.jpg" -o rav4.jpg && \
+curl -sL "https://i.ibb.co/7QpKs0V/patrol-noir.jpg" -o patrol.jpg && \
+curl -sL "https://i.ibb.co/1mPqV8W/coaster-bus.jpg" -o coaster.jpg && \
+curl -sL "https://i.ibb.co/JpR7X9Y/landcruiser-v8.jpg" -o landcruiser.jpg && \
+curl -sL "https://i.ibb.co/VY0xL6M/yango-voiture.jpg" -o yango.jpg && \
+cd../../.. && \
+psql $DATABASE_URL -c "UPDATE vehicles SET image_url = '/images/corolla.jpg' WHERE id = 1; UPDATE vehicles SET image_url = '/images/hiace.jpg' WHERE id = 2; UPDATE vehicles SET image_url = '/images/prado.jpg' WHERE id = 3; UPDATE vehicles SET image_url = '/images/tucson.jpg' WHERE id = 4; UPDATE vehicles SET image_url = '/images/rav4.jpg' WHERE id = 5; UPDATE vehicles SET image_url = '/images/patrol.jpg' WHERE id = 6; UPDATE vehicles SET image_url = '/images/coaster.jpg' WHERE id = 7; UPDATE vehicles SET image_url = '/images/landcruiser.jpg' WHERE id = 8; UPDATE vehicles SET image_url = '/images/yango.jpg' WHERE id = 9;" && \
+cat > client/src/pages/Home.jsx << 'EOF'
+export default function Home() {
+  return (
+    <div className="bg-black">
+      <div className="bg-black text-white py-20">
+        <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h1 className="text-5xl font-bold mb-4">TKFLOW LOCATION</h1>
+            <p className="text-xl text-gray-300 mb-8">Louez votre véhicule en 2 clics. Paiement Mobile Money.</p>
+            <a href="/vehicles" className="bg-orange-500 text-white px-8 py-3 rounded-lg font-bold hover:bg-orange-600">Browse Vehicles</a>
+          </div>
+          <img src="/images/prado.jpg" alt="Toyota Prado 4x4 Douala" className="rounded-lg shadow-2xl w-full h-96 object-cover"/>
+        </div>
+      </div>
+      <div className="bg-gray-900 py-16">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-4xl font-bold text-white mb-12 text-center">Véhicules Populaires à Douala</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-black rounded-lg overflow-hidden">
+              <img src="/images/hiace.jpg" alt="Toyota Hiace 15 places" className="w-full h-64 object-cover"/>
+              <div className="p-6"><h3 className="text-2xl font-bold text-white">Toyota Hiace 15 Places</h3><p className="text-gray-400">Transport de groupe - 45,000 FCFA/jour</p></div>
+            </div>
+            <div className="bg-black rounded-lg overflow-hidden">
+              <img src="/images/corolla.jpg" alt="Toyota Corolla Taxi" className="w-full h-64 object-cover"/>
+              <div className="p-6"><h3 className="text-2xl font-bold text-white">Toyota Corolla 2018</h3><p className="text-gray-400">Économique ville - 25,000 FCFA/jour</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+EOF
+cat > client/src/pages/Contact.jsx << 'EOF'
+export default function Contact() {
+  return (
+    <div className="min-h-screen bg-black text-white py-20">
+      <div className="max-w-4xl mx-auto px-4">
+        <h1 className="text-5xl font-bold mb-12 text-center">Contactez-nous</h1>
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="bg-gray-900 p-8 rounded-lg">
+            <h2 className="text-2xl font-bold mb-6 text-orange-500">Nos Coordonnées</h2>
+            <div className="space-y-4">
+              <div><p className="text-gray-400">Téléphone</p><p className="text-xl">+237 657 502 180</p></div>
+              <div><p className="text-gray-400">WhatsApp</p><a href="https://wa.me/237677659295" className="text-xl text-green-500">+237 677 659 295</a></div>
+              <div><p className="text-gray-400">Email</p><p className="text-xl">todjoumfranck@gmail.com</p></div>
+              <div><p className="text-gray-400">Adresse</p><p className="text-xl">Douala, Cameroun</p></div>
+            </div>
+          </div>
+          <div className="bg-gray-900 p-8 rounded-lg">
+            <h2 className="text-2xl font-bold mb-6 text-orange-500">Horaires</h2>
+            <p className="text-xl">Lun - Sam : 8h - 18h</p>
+            <p className="text-xl">Dimanche : Fermé</p>
+            <p className="text-gray-400 mt-4">Réservation 24/7 en ligne</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+EOF
+cat > server/middleware/checkCNI.js << 'EOF'
+const checkCNI = async (req, res, next) => {
+  const user = req.user;
+  if (user.email === 'todjoumfranck@gmail.com' || user.role === 'admin' || user.role === 'superadmin') {
+    return next();
+  }
+  if (!user.cni_number ||!user.cni_photo_url) {
+    return res.status(403).json({error: 'CNI_REQUIRED', message: 'Upload your CNI first'});
+  }
+  next();
+};
+module.exports = checkCNI;
+EOF
+cat > client/src/components/CNIUpload.jsx << 'EOF'
+import { useState } from 'react';
+export default function CNIUpload({ onUpload }) {
+  const [preview, setPreview] = useState(null);
+  
+  const handleFile = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+      onUpload(file);
+    }
+  };
+
+  return (
+    <div className="bg-gray-800 p-6 rounded-lg mb-6">
+      <h3 className="text-white text-xl mb-4">Photo de votre CNI</h3>
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <label className="bg-orange-500 text-white p-4 rounded-lg text-center cursor-pointer hover:bg-orange-600">
+          <input type="file" accept="image/*" onChange={handleFile} className="hidden"/>
+          📁 Choisir Galerie
+        </label>
+        <label className="bg-orange-500 text-white p-4 rounded-lg text-center cursor-pointer hover:bg-orange-600">
+          <input type="file" accept="image/*" capture="environment" onChange={handleFile} className="hidden"/>
+          📷 Prendre Photo
+        </label>
+      </div>
+      {preview && <img src={preview} alt="CNI Preview" className="w-full rounded-lg"/>}
+    </div>
+  );
+}
+EOF
+sed -i "s/app.post('\/api\/reservations'/app.post('\/api\/reservations', require('.\/middleware\/checkCNI'),/g" server/routes/reservations.js 2>/dev/null || echo "Route file not found, skip" && \
+kill 1 && echo "TERMINE - Ctrl+R à droite dans 30s"
