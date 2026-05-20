@@ -257,6 +257,22 @@ app.post('/api/login', async (req, res) => {
   res.json({ user: sanitizeUser(user), message: 'Login successful' });
 });
 
+app.post('/api/users/upload-cni', upload.single('cni'), (req, res) => {
+  const { userId } = req.body;
+  if (!userId) return res.status(400).json({ error: 'User ID is required.' });
+  const users = readData(USERS_FILE);
+  const idx = users.findIndex(u => u.id === userId);
+  if (idx === -1) return res.status(404).json({ error: 'User not found.' });
+  if (!req.file) return res.status(400).json({ error: 'No file uploaded.' });
+  users[idx] = {
+    ...users[idx],
+    cniFront: req.file.filename,
+    profileComplete: !!(users[idx].cniNumber)
+  };
+  writeData(USERS_FILE, users);
+  res.json({ success: true, filename: req.file.filename, user: sanitizeUser(users[idx]) });
+});
+
 app.post('/api/profile/complete', upload.fields([
   { name: 'cniFront', maxCount: 1 },
   { name: 'cniBack', maxCount: 1 },

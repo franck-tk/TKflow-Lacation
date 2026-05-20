@@ -1,0 +1,118 @@
+cat > client/src/pages/Booking.jsx << 'EOF'
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import CNIUpload from '../components/CNIUpload';
+
+export default function Booking() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [vehicle, setVehicle] = useState(null);
+  const [user, setUser] = useState(null);
+  const [dates, setDates] = useState({ start: '', end: '' });
+  const [cniFile, setCniFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) return navigate('/login');
+    
+    axios.get(`/api/vehicles/${id}`).then(res => setVehicle(res.data));
+    axios.get('/api/auth/me', { headers: { Authorization: `Bearer ${token}` }})
+     .then(res => setUser(res.data))
+     .catch(() => navigate('/login'));
+  }, [id, navigate]);
+
+  const uploadCNI = async (file) => {
+    const formData = new FormData();
+    formData.append('cni', file);
+    const token = localStorage.getItem('token');
+    try {
+      await axios.post('/api/users/upload-cni', formData, {
+        headers: { 
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      setCniFile(file);
+      setUser({...user, cni_photo: true});
+    } catch (err) {
+      setError('CNI upload failed');
+    }
+  };
+
+  const handleBooking = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    
+    // Superadmin bypass CNI
+    const needCNI = user?.role!== 'admin' && user?.role!== 'superadmin' &&!user?.cni_photo;
+    if (needCNI &&!cniFile) {
+      setError('Please upload your CNI photo');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('token');
+      await axios.post('/api/reservations', {
+        vehicleId: id,
+        startDate: dates.start,
+        endDate: dates.end
+      }, { headers: { Authorization: `Bearer ${token}` }});
+      navigate('/dashboard?booked=true');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Booking failed');
+    }
+    setLoading(false);
+  };
+
+  if (!vehicle ||!user) return <div className="min-h-screen bg-black text-white flex items-center justify-center">Loading...</div>;
+
+  const needCNI = user.role!== 'admin' && user.role!== 'superadmin' &&!user.cni_photo;
+
+  return (
+    <div className="min-h-screen bg-black text-white py-12 px-4">
+      <div className="max-w-2xl mx-auto bg-gray-900 p-8 rounded-lg">
+        <h1 className="text-3xl font-bold mb-6">Book {vehicle.name}</h1>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        
+        <div className="mb-6">
+          <img src={vehicle.image_url} alt={vehicle.name} className="w-full h-64 object-cover rounded-lg mb-4"/>
+          <p className="text-2xl text-orange-500 font-bold">{vehicle.price_per_day} FCFA/day</p>
+        </div>
+
+        {needCNI && (
+          <div className="mb-6">
+            <p className="text-yellow-500 mb-3">⚠️ CNI required before booking</p>
+            <CNIUpload onUpload={uploadCNI} />
+          </div>
+        )}
+
+        <form onSubmit={handleBooking} className="space-y-4">
+          <div>
+            <label className="block text-gray-300 mb-2">Start Date</label>
+            <input type="date" required min={new Date().toISOString().split('T')[0]}
+              className="w-full p-3 bg-gray-800 text-white rounded"
+              onChange={(e) => setDates({...dates, start: e.target.value})}/>
+          </div>
+          <div>
+            <label className="block text-gray-300 mb-2">End Date</label>
+            <input type="date" required min={dates.start || new Date().toISOString().split('T')[0]}
+              className="w-full p-3 bg-gray-800 text-white rounded"
+              onChange={(e) => setDates({...dates, end: e.target.value})}/>
+          </div>
+          
+          <button type="submit" disabled={loading || (needCNI &&!cniFile)}
+            className="w-full bg-orange-500 text-white p-3 rounded font-bold hover:bg-orange-600 disabled:bg-gray-600 disabled:cursor-not-allowed">
+            {loading? 'Processing...' : 'Confirm Booking'}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+EOF
+kill 1 && echo "BOOKING MIS A JOUR - Teste à droite dans 30s"

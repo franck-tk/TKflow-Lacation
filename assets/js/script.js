@@ -942,6 +942,17 @@ function renderReservationBooking() {
         <p><strong>Description:</strong> ${vehicle.description}</p>
       </div>
     </div>
+    ${currentUser && currentUser.role !== 'superadmin' && currentUser.role !== 'admin' && !currentUser.profileComplete ? `
+    <div class="cni-notice" id="cniNoticeBlock">
+      <p class="cni-warn">⚠️ Your profile is incomplete. Upload your CNI photo below to enable booking, or <a href="./complete-profile.html?redirect=${encodeURIComponent('./reservations.html?vehicleId=' + vehicle.id)}">complete your full profile</a>.</p>
+      <div class="file-upload-wrap" style="margin-bottom:1rem;">
+        <label class="file-upload-btn" for="inlineCniUpload">📎 Select CNI Photo</label>
+        <input type="file" id="inlineCniUpload" accept="image/*" style="display:none">
+        <span id="inlineCniName" style="margin-left:0.5rem;font-size:0.85rem;color:#94a3b8;">No file chosen</span>
+      </div>
+      <button type="button" class="btn secondary" id="inlineCniSubmit">Upload CNI</button>
+      <p id="inlineCniStatus" style="margin-top:0.5rem;font-size:0.85rem;"></p>
+    </div>` : ''}
     <form id="vehicleBookingForm" class="field-group">
       <label>Start Date</label>
       <input type="date" id="bookingStartDate" required>
@@ -962,6 +973,46 @@ function renderReservationBooking() {
   `;
 
   bookingContainer.appendChild(bookingCard);
+
+  // Inline CNI upload handler (shown when profile is incomplete)
+  const inlineCniInput = document.getElementById('inlineCniUpload');
+  const inlineCniName = document.getElementById('inlineCniName');
+  const inlineCniSubmit = document.getElementById('inlineCniSubmit');
+  const inlineCniStatus = document.getElementById('inlineCniStatus');
+  const cniNoticeBlock = document.getElementById('cniNoticeBlock');
+
+  if (inlineCniInput) {
+    inlineCniInput.addEventListener('change', () => {
+      inlineCniName.textContent = inlineCniInput.files[0]?.name || 'No file chosen';
+    });
+
+    inlineCniSubmit.addEventListener('click', async () => {
+      const file = inlineCniInput.files[0];
+      if (!file) { inlineCniStatus.textContent = 'Please select a file first.'; inlineCniStatus.style.color = '#fb7185'; return; }
+      inlineCniSubmit.disabled = true;
+      inlineCniStatus.textContent = 'Uploading…';
+      inlineCniStatus.style.color = '#94a3b8';
+      try {
+        const fd = new FormData();
+        fd.append('cni', file);
+        fd.append('userId', currentUser.id);
+        const resp = await fetch(`${API_BASE}/users/upload-cni`, { method: 'POST', body: fd });
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.error || 'Upload failed');
+        // Update local session so the booking form unlocks
+        localStorage.setItem('currentUser', JSON.stringify({ ...currentUser, cniFront: data.filename }));
+        inlineCniStatus.textContent = '✅ CNI uploaded. You can now complete your booking.';
+        inlineCniStatus.style.color = '#4ade80';
+        inlineCniSubmit.disabled = false;
+        // Hide warning banner after success
+        if (cniNoticeBlock) cniNoticeBlock.style.border = '1px solid #4ade80';
+      } catch (err) {
+        inlineCniStatus.textContent = err.message || 'Upload failed. Please try again.';
+        inlineCniStatus.style.color = '#fb7185';
+        inlineCniSubmit.disabled = false;
+      }
+    });
+  }
 
   const form = document.getElementById('vehicleBookingForm');
   const startDateInput = document.getElementById('bookingStartDate');
@@ -999,7 +1050,7 @@ function renderReservationBooking() {
     const paymentMethod = paymentSelect.value;
 
     if (!startDateValue || !endDateValue) {
-      alert('Veuillez sélectionner les dates de début et de fin.');
+      alert('Please select start and end dates.');
       return;
     }
 
@@ -1177,8 +1228,8 @@ async function renderAdminUsers(container) {
   if (currentUser.role !== 'superadmin') {
     container.innerHTML = `
       <div class="confirmation-card">
-        <h3>Accès refusé</h3>
-        <p>Seul un superadmin peut gérer les utilisateurs.</p>
+        <h3>Access Denied</h3>
+        <p>Only a superadmin can manage users.</p>
       </div>
     `;
     return;
