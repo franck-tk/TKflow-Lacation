@@ -460,3 +460,7 @@ app.post('/api/contact', (req, res) => {
 app.listen(PORT, () => {
   console.log(`TKflow server running on http://localhost:${PORT}`);
 });
+
+if (process.env.NODE_ENV === 'production') {
+  require('./keepalive');
+}

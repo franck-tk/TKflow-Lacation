@@ -7,7 +7,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/corolla.jpg",
     "description": "Reliable compact sedan for city and highway travel."
   },
   {
@@ -18,7 +18,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/corolla.jpg",
     "description": "Reliable compact sedan for city and highway travel."
   },
   {
@@ -29,7 +29,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/corolla.jpg",
     "description": "Reliable compact sedan for city and highway travel."
   },
   {
@@ -40,7 +40,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/corolla.jpg",
     "description": "Reliable compact sedan for city and highway travel."
   },
   {
@@ -51,7 +51,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/corolla.jpg",
     "description": "Reliable compact sedan for city and highway travel."
   },
   {
@@ -62,7 +62,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/civic.jpg",
     "description": "Comfortable and modern sedan with excellent fuel economy."
   },
   {
@@ -73,7 +73,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/civic.jpg",
     "description": "Comfortable and modern sedan with excellent fuel economy."
   },
   {
@@ -84,7 +84,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/civic.jpg",
     "description": "Comfortable and modern sedan with excellent fuel economy."
   },
   {
@@ -95,7 +95,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/civic.jpg",
     "description": "Comfortable and modern sedan with excellent fuel economy."
   },
   {
@@ -106,7 +106,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/civic.jpg",
     "description": "Comfortable and modern sedan with excellent fuel economy."
   },
   {
@@ -117,7 +117,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/sentra.jpg",
     "description": "Efficient sedan built for everyday driving and comfort."
   },
   {
@@ -128,7 +128,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/sentra.jpg",
     "description": "Efficient sedan built for everyday driving and comfort."
   },
   {
@@ -139,7 +139,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/sentra.jpg",
     "description": "Efficient sedan built for everyday driving and comfort."
   },
   {
@@ -150,7 +150,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/sentra.jpg",
     "description": "Efficient sedan built for everyday driving and comfort."
   },
   {
@@ -161,7 +161,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/sentra.jpg",
     "description": "Efficient sedan built for everyday driving and comfort."
   },
   {
@@ -172,7 +172,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/bmw3.jpg",
     "description": "Premium business sedan with dynamic performance and style."
   },
   {
@@ -183,7 +183,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/bmw3.jpg",
     "description": "Premium business sedan with dynamic performance and style."
   },
   {
@@ -194,7 +194,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/bmw3.jpg",
     "description": "Premium business sedan with dynamic performance and style."
   },
   {
@@ -205,7 +205,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/bmw3.jpg",
     "description": "Premium business sedan with dynamic performance and style."
   },
   {
@@ -216,7 +216,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/bmw3.jpg",
     "description": "Premium business sedan with dynamic performance and style."
   },
   {
@@ -227,7 +227,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Diesel",
-    "image": "",
+    "image": "/assets/images/mercedes.jpg",
     "description": "Sophisticated luxury sedan with advanced comfort features."
   },
   {
@@ -238,7 +238,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Diesel",
-    "image": "",
+    "image": "/assets/images/mercedes.jpg",
     "description": "Sophisticated luxury sedan with advanced comfort features."
   },
   {
@@ -249,7 +249,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Diesel",
-    "image": "",
+    "image": "/assets/images/mercedes.jpg",
     "description": "Sophisticated luxury sedan with advanced comfort features."
   },
   {
@@ -260,7 +260,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Diesel",
-    "image": "",
+    "image": "/assets/images/mercedes.jpg",
     "description": "Sophisticated luxury sedan with advanced comfort features."
   },
   {
@@ -271,7 +271,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Diesel",
-    "image": "",
+    "image": "/assets/images/mercedes.jpg",
     "description": "Sophisticated luxury sedan with advanced comfort features."
   },
   {
@@ -282,7 +282,7 @@
     "seats": 7,
     "luggage": 5,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/explorer.jpg",
     "description": "Spacious SUV ideal for family trips and weekend adventures."
   },
   {
@@ -293,7 +293,7 @@
     "seats": 7,
     "luggage": 5,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/explorer.jpg",
     "description": "Spacious SUV ideal for family trips and weekend adventures."
   },
   {
@@ -304,7 +304,7 @@
     "seats": 7,
     "luggage": 5,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/explorer.jpg",
     "description": "Spacious SUV ideal for family trips and weekend adventures."
   },
   {
@@ -315,7 +315,7 @@
     "seats": 7,
     "luggage": 5,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/explorer.jpg",
     "description": "Spacious SUV ideal for family trips and weekend adventures."
   },
   {
@@ -326,7 +326,7 @@
     "seats": 7,
     "luggage": 5,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/explorer.jpg",
     "description": "Spacious SUV ideal for family trips and weekend adventures."
   },
   {
@@ -337,7 +337,7 @@
     "seats": 7,
     "luggage": 5,
     "fuel": "Diesel",
-    "image": "",
+    "image": "/assets/images/jeep.jpg",
     "description": "Rugged SUV built for comfort and off-road capability."
   },
   {
@@ -348,7 +348,7 @@
     "seats": 7,
     "luggage": 5,
     "fuel": "Diesel",
-    "image": "",
+    "image": "/assets/images/jeep.jpg",
     "description": "Rugged SUV built for comfort and off-road capability."
   },
   {
@@ -359,7 +359,7 @@
     "seats": 7,
     "luggage": 5,
     "fuel": "Diesel",
-    "image": "",
+    "image": "/assets/images/jeep.jpg",
     "description": "Rugged SUV built for comfort and off-road capability."
   },
   {
@@ -370,7 +370,7 @@
     "seats": 7,
     "luggage": 5,
     "fuel": "Diesel",
-    "image": "",
+    "image": "/assets/images/jeep.jpg",
     "description": "Rugged SUV built for comfort and off-road capability."
   },
   {
@@ -381,7 +381,7 @@
     "seats": 7,
     "luggage": 5,
     "fuel": "Diesel",
-    "image": "",
+    "image": "/assets/images/jeep.jpg",
     "description": "Rugged SUV built for comfort and off-road capability."
   },
   {
@@ -392,7 +392,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Electric",
-    "image": "",
+    "image": "/assets/images/tesla.jpg",
     "description": "Electric sedan with advanced autopilot and premium interior."
   },
   {
@@ -403,7 +403,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Electric",
-    "image": "",
+    "image": "/assets/images/tesla.jpg",
     "description": "Electric sedan with advanced autopilot and premium interior."
   },
   {
@@ -414,7 +414,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Electric",
-    "image": "",
+    "image": "/assets/images/tesla.jpg",
     "description": "Electric sedan with advanced autopilot and premium interior."
   },
   {
@@ -425,7 +425,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Electric",
-    "image": "",
+    "image": "/assets/images/tesla.jpg",
     "description": "Electric sedan with advanced autopilot and premium interior."
   },
   {
@@ -436,7 +436,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Electric",
-    "image": "",
+    "image": "/assets/images/tesla.jpg",
     "description": "Electric sedan with advanced autopilot and premium interior."
   },
   {
@@ -447,7 +447,7 @@
     "seats": 5,
     "luggage": 2,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/clio.jpg",
     "description": "Compact hatchback perfect for city driving and easy parking."
   },
   {
@@ -458,7 +458,7 @@
     "seats": 5,
     "luggage": 2,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/clio.jpg",
     "description": "Compact hatchback perfect for city driving and easy parking."
   },
   {
@@ -469,7 +469,7 @@
     "seats": 5,
     "luggage": 2,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/clio.jpg",
     "description": "Compact hatchback perfect for city driving and easy parking."
   },
   {
@@ -480,7 +480,7 @@
     "seats": 5,
     "luggage": 2,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/clio.jpg",
     "description": "Compact hatchback perfect for city driving and easy parking."
   },
   {
@@ -491,7 +491,7 @@
     "seats": 5,
     "luggage": 2,
     "fuel": "Petrol",
-    "image": "",
+    "image": "/assets/images/clio.jpg",
     "description": "Compact hatchback perfect for city driving and easy parking."
   },
   {
@@ -502,7 +502,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Diesel",
-    "image": "",
+    "image": "/assets/images/peugeot.jpg",
     "description": "Efficient compact car with a premium interior and agile handling."
   },
   {
@@ -513,7 +513,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Diesel",
-    "image": "",
+    "image": "/assets/images/peugeot.jpg",
     "description": "Efficient compact car with a premium interior and agile handling."
   },
   {
@@ -524,7 +524,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Diesel",
-    "image": "",
+    "image": "/assets/images/peugeot.jpg",
     "description": "Efficient compact car with a premium interior and agile handling."
   },
   {
@@ -535,7 +535,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Diesel",
-    "image": "",
+    "image": "/assets/images/peugeot.jpg",
     "description": "Efficient compact car with a premium interior and agile handling."
   },
   {
@@ -546,7 +546,7 @@
     "seats": 5,
     "luggage": 3,
     "fuel": "Diesel",
-    "image": "",
+    "image": "/assets/images/peugeot.jpg",
     "description": "Efficient compact car with a premium interior and agile handling."
   }
 ]

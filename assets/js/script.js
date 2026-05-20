@@ -489,11 +489,11 @@ async function renderHomeFleet() {
       <div class="fleet-card-body">
         <h3>${v.name || (v.brand + ' ' + v.model)}</h3>
         <div class="fleet-card-meta">
-          ${v.seats ? `<span>👤 ${v.seats} pl.</span>` : ''}
+          ${v.seats ? `<span>👤 ${v.seats} seats</span>` : ''}
           ${v.fuel ? `<span>⛽ ${v.fuel}</span>` : ''}
           ${v.transmission ? `<span>⚙ ${v.transmission}</span>` : ''}
         </div>
-        <div class="fleet-card-price">${v.pricePerDay || v.basePrice || '–'} €<span>/jour</span></div>
+        <div class="fleet-card-price">${v.pricePerDay || v.basePrice || '–'} €<span>/day</span></div>
         <a href="./vehicules.html" class="btn primary fleet-reserve-btn">Reserve</a>
       </div>
     `;
@@ -818,10 +818,10 @@ function openPaymentModal(transactionId) {
 
   const confirmBtn = document.createElement('button');
   confirmBtn.className = 'btn primary';
-  confirmBtn.textContent = 'Confirmer le paiement';
+  confirmBtn.textContent = 'Confirm Payment';
   confirmBtn.addEventListener('click', async () => {
     const pin = document.getElementById('paymentPin').value.trim();
-    if (!pin) return alert('Entrez le PIN');
+    if (!pin) return alert('Please enter your PIN');
     try {
       const resp = await fetch(`${API_BASE}/pay/confirm`, {
         method: 'POST',
@@ -840,7 +840,7 @@ function openPaymentModal(transactionId) {
       displayReservationSummary();
     } catch (err) {
       console.error('Payment confirm error', err);
-      alert('Erreur lors de la confirmation du paiement');
+      alert('Payment confirmation failed. Please try again.');
     }
   });
   modal.appendChild(confirmBtn);
@@ -947,17 +947,17 @@ function renderReservationBooking() {
       <input type="date" id="bookingStartDate" required>
       <label>End Date</label>
       <input type="date" id="bookingEndDate" required>
-      <label>Méthode de paiement</label>
+      <label>Payment Method</label>
       <select id="bookingPaymentMethod" required>
         <option value="Orange Money">Orange Money</option>
         <option value="MTN Money">MTN Money</option>
         <option value="Bank Transfer">Bank Transfer</option>
       </select>
       <div id="bookingSummary" class="summary">
-        <p><strong>Durée :</strong> 0 jours</p>
-        <p><strong>Total :</strong> ${formatMoney(0)}</p>
+        <p><strong>Duration:</strong> 0 days</p>
+        <p><strong>Total:</strong> ${formatMoney(0)}</p>
       </div>
-      <button class="btn primary" type="submit">Payer et confirmer</button>
+      <button class="btn primary" type="submit">Pay & Confirm</button>
     </form>
   `;
 
@@ -973,19 +973,19 @@ function renderReservationBooking() {
     const startDateValue = startDateInput.value;
     const endDateValue = endDateInput.value;
     if (!startDateValue || !endDateValue) {
-      summary.innerHTML = `<p><strong>Durée :</strong> 0 jours</p><p><strong>Total :</strong> ${formatMoney(0)}</p>`;
+      summary.innerHTML = `<p><strong>Duration:</strong> 0 days</p><p><strong>Total:</strong> ${formatMoney(0)}</p>`;
       return;
     }
     const startDate = new Date(startDateValue);
     const endDate = new Date(endDateValue);
     if (endDate < startDate) {
-      summary.innerHTML = `<p style="color:#fb7185;"><strong>Erreur :</strong> la date de fin doit être après la date de début.</p>`;
+      summary.innerHTML = `<p style="color:#fb7185;"><strong>Error:</strong> end date must be after start date.</p>`;
       return;
     }
     const duration = daysBetween(startDate, endDate);
     summary.innerHTML = `
-      <p><strong>Durée :</strong> ${duration} jour${duration === 1 ? '' : 's'}</p>
-      <p><strong>Total :</strong> ${formatMoney(duration * vehicle.pricePerDay)}</p>
+      <p><strong>Duration:</strong> ${duration} day${duration === 1 ? '' : 's'}</p>
+      <p><strong>Total:</strong> ${formatMoney(duration * vehicle.pricePerDay)}</p>
     `;
   }
 

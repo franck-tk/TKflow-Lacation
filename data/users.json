@@ -25,5 +25,33 @@
     "cniBack": "",
     "portrait": "",
     "createdAt": "2026-05-19T11:29:54.995Z"
+  },
+  {
+    "id": "0af37b0c-0a96-41d1-b3a8-f1d8aae6a587",
+    "username": "Audrey",
+    "phone": "696156052",
+    "email": "audreyvenus866@gmail.com",
+    "password": "$2b$10$gG2kDWn3r2iy/ZoRtbnUfOoOOPNL2buh7OTPe35W4iNYb/mFQe8jC",
+    "role": "user",
+    "googleAuth": false,
+    "appleAuth": false,
+    "cniFront": "",
+    "cniBack": "",
+    "portrait": "",
+    "createdAt": "2026-05-19T13:52:36.080Z"
+  },
+  {
+    "id": "5ab865d9-c46e-4fe8-958a-1567e6d940dd",
+    "username": "Blondi",
+    "phone": "+237671124889",
+    "email": "dorinetchadeu2016@gmail.com",
+    "password": "$2b$10$5kgW68QKs.rKa7twKbIbz.kJFgsXhaY0wb9dGa87zUGaw2pOJUqQm",
+    "role": "user",
+    "googleAuth": false,
+    "appleAuth": false,
+    "cniFront": "",
+    "cniBack": "",
+    "portrait": "",
+    "createdAt": "2026-05-19T14:12:59.155Z"
   }
 ]

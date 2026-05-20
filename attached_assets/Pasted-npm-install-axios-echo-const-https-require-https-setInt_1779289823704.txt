@@ -1,0 +1,98 @@
+npm install axios && \
+echo "const https = require('https'); setInterval(() => https.get('https://tkflow-location.replit.app'), 240000);" > server/keepalive.js && \
+echo "require('./keepalive');" >> server/index.js && \
+mkdir -p client/src/pages client/public/images && \
+cat > client/src/pages/Signup.jsx << 'EOF'
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+export default function Signup() {
+  const [form, setForm] = useState({username: '', email: '', phone: '', password: '', confirmPassword: '', acceptTerms: false});
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (form.password !== form.confirmPassword) return setError('Passwords do not match');
+    if (!form.acceptTerms) return setError('You must accept the terms');
+    try {
+      await axios.post('/api/auth/signup', {username: form.username, email: form.email, phone: form.phone, password: form.password});
+      navigate('/login');
+    } catch (err) { setError('Signup failed'); }
+  };
+  return (
+    <div className="min-h-screen bg-black flex items-center justify-center px-4">
+      <div className="max-w-md w-full bg-gray-900 p-8 rounded-lg">
+        <h2 className="text-3xl font-bold text-white mb-6">Create Account</h2>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input type="text" placeholder="Username" required className="w-full p-3 bg-gray-800 text-white rounded" onChange={(e) => setForm({...form, username: e.target.value})}/>
+          <input type="email" placeholder="Email" required className="w-full p-3 bg-gray-800 text-white rounded" onChange={(e) => setForm({...form, email: e.target.value})}/>
+          <input type="tel" placeholder="Phone +237..." required className="w-full p-3 bg-gray-800 text-white rounded" onChange={(e) => setForm({...form, phone: e.target.value})}/>
+          <input type="password" placeholder="Password" required minLength={8} className="w-full p-3 bg-gray-800 text-white rounded" onChange={(e) => setForm({...form, password: e.target.value})}/>
+          <input type="password" placeholder="Confirm Password" required className="w-full p-3 bg-gray-800 text-white rounded" onChange={(e) => setForm({...form, confirmPassword: e.target.value})}/>
+          <label className="flex items-center text-gray-300"><input type="checkbox" className="mr-2" onChange={(e) => setForm({...form, acceptTerms: e.target.checked})}/>I accept Terms</label>
+          <button type="submit" className="w-full bg-orange-500 text-white p-3 rounded font-bold">Sign Up</button>
+        </form>
+        <p className="text-gray-400 mt-4 text-center">Have account? <a href="/login" className="text-orange-500">Login</a></p>
+      </div>
+    </div>
+  );
+}
+EOF
+cat > client/src/pages/Login.jsx << 'EOF'
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+export default function Login() {
+  const [form, setForm] = useState({email: '', password: ''});
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post('/api/auth/login', form);
+      localStorage.setItem('token', res.data.token);
+      navigate('/dashboard');
+    } catch (err) { setError('Invalid credentials'); }
+  };
+  return (
+    <div className="min-h-screen bg-black flex items-center justify-center px-4">
+      <div className="max-w-md w-full bg-gray-900 p-8 rounded-lg">
+        <h2 className="text-3xl font-bold text-white mb-6">Login</h2>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input type="email" placeholder="Email" required className="w-full p-3 bg-gray-800 text-white rounded" onChange={(e) => setForm({...form, email: e.target.value})}/>
+          <input type="password" placeholder="Password" required className="w-full p-3 bg-gray-800 text-white rounded" onChange={(e) => setForm({...form, password: e.target.value})}/>
+          <button type="submit" className="w-full bg-orange-500 text-white p-3 rounded font-bold">Login</button>
+        </form>
+        <p className="text-gray-400 mt-4 text-center">No account? <a href="/signup" className="text-orange-500">Sign up</a></p>
+      </div>
+    </div>
+  );
+}
+EOF
+cd client/public/images && \
+curl -sL "https://images.unsplash.com/photo-1626072778346-0ab66003d6a4?w=800" -o corolla.jpg && \
+curl -sL "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=800" -o hiace.jpg && \
+curl -sL "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800" -o prado.jpg && \
+curl -sL "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800" -o tucson.jpg && \
+curl -sL "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800" -o rav4.jpg && \
+curl -sL "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800" -o patrol.jpg && \
+curl -sL "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800" -o coaster.jpg && \
+curl -sL "https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=800" -o landcruiser.jpg && \
+curl -sL "https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=800" -o yango.jpg && \
+cd ../../.. && \
+psql $DATABASE_URL -c "UPDATE vehicles SET image_url = '/images/corolla.jpg' WHERE id = 1; UPDATE vehicles SET image_url = '/images/hiace.jpg' WHERE id = 2; UPDATE vehicles SET image_url = '/images/prado.jpg' WHERE id = 3; UPDATE vehicles SET image_url = '/images/tucson.jpg' WHERE id = 4; UPDATE vehicles SET image_url = '/images/rav4.jpg' WHERE id = 5; UPDATE vehicles SET image_url = '/images/patrol.jpg' WHERE id = 6; UPDATE vehicles SET image_url = '/images/coaster.jpg' WHERE id = 7; UPDATE vehicles SET image_url = '/images/landcruiser.jpg' WHERE id = 8; UPDATE vehicles SET image_url = '/images/yango.jpg' WHERE id = 9;" && \
+cat > server/middleware/checkProfile.js << 'EOF'
+const checkProfileComplete = async (req, res, next) => {
+  const user = req.user;
+  if (user.role === 'admin') return next();
+  if (req.path.includes('/reserve') && !user.cni_number) {
+    return res.status(403).json({error: 'PROFILE_INCOMPLETE', message: 'Complete your profile first'});
+  }
+  next();
+};
+module.exports = checkProfileComplete;
+EOF
+kill 1 && \
+echo "FINI - Attends 30s et regarde à droite"
