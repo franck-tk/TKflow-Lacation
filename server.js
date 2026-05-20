@@ -257,6 +257,8 @@ app.post('/api/login', async (req, res) => {
   res.json({ user: sanitizeUser(user), message: 'Login successful' });
 });
 
+const OWNER_EMAIL = 'todjoumfranck@gmail.com';
+
 app.post('/api/users/upload-cni', upload.single('cni'), (req, res) => {
   const { userId } = req.body;
   if (!userId) return res.status(400).json({ error: 'User ID is required.' });
@@ -267,7 +269,7 @@ app.post('/api/users/upload-cni', upload.single('cni'), (req, res) => {
   users[idx] = {
     ...users[idx],
     cniFront: req.file.filename,
-    profileComplete: !!(users[idx].cniNumber)
+    profileComplete: true
   };
   writeData(USERS_FILE, users);
   res.json({ success: true, filename: req.file.filename, user: sanitizeUser(users[idx]) });

@@ -572,7 +572,8 @@ async function renderVehicles() {
         window.location.href = './login.html';
         return;
       }
-      if (!user.profileComplete) {
+      const needsProfile = !user.profileComplete && user.role !== 'superadmin' && user.role !== 'admin' && user.email !== 'todjoumfranck@gmail.com';
+      if (needsProfile) {
         window.location.href = `./complete-profile.html?redirect=${encodeURIComponent('./reservations.html?vehicleId=' + vehicle.id)}`;
         return;
       }
@@ -942,7 +943,7 @@ function renderReservationBooking() {
         <p><strong>Description:</strong> ${vehicle.description}</p>
       </div>
     </div>
-    ${currentUser && currentUser.role !== 'superadmin' && currentUser.role !== 'admin' && !currentUser.profileComplete ? `
+    ${currentUser && currentUser.role !== 'superadmin' && currentUser.role !== 'admin' && currentUser.email !== 'todjoumfranck@gmail.com' && !currentUser.profileComplete ? `
     <div class="cni-notice" id="cniNoticeBlock">
       <p class="cni-warn">⚠️ Your profile is incomplete. Upload your CNI photo below to enable booking, or <a href="./complete-profile.html?redirect=${encodeURIComponent('./reservations.html?vehicleId=' + vehicle.id)}">complete your full profile</a>.</p>
       <div class="file-upload-wrap" style="margin-bottom:1rem;">
