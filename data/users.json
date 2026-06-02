@@ -53,5 +53,19 @@
     "cniBack": "",
     "portrait": "",
     "createdAt": "2026-05-19T14:12:59.155Z"
+  },
+  {
+    "id": "301764e9-3107-4d17-8b56-3ec8aee01774",
+    "username": "franck junior",
+    "phone": "+237 657502180",
+    "email": "franckjunior@gmail.com",
+    "password": "$2b$10$kxJhHrXBI/3StKE5gT/yzOU2fvPWJ13dR/MTyalK0gtRJWYQsR/0y",
+    "role": "user",
+    "googleAuth": false,
+    "appleAuth": false,
+    "cniFront": "",
+    "cniBack": "",
+    "portrait": "",
+    "createdAt": "2026-05-21T14:48:43.065Z"
   }
 ]
